@@ -27,32 +27,23 @@
         </div>  
     </div>
     <!-- statistics container -->
-    <div id="stats" class="flex text-2xl font-semibold h-auto z-0">
-      <div id="roundNumber" class="left-12 top-10 text-5xl font-bold h-auto absolute text-orange-500"></div>
-      <div id="otherStats" class="right-12 top-12 text-4xl font-semibold h-auto absolute">
+    <div id="stats" class="flex items-center justify-center md:items-start md:justify-start text-2xl font-semibold h-auto z-0">
+      <div id="roundNumber" class="left-12 top-[42px] text-5xl font-bold h-auto absolute hidden md:block"></div>
+      <div id="otherStats" class="md:right-12 md:top-12 text-4xl font-semibold h-auto relative md:absolute mt-[5vh] items-center justify-center md:items-start md:justify-start">
         <span id="correct" class="text-white bg-success p-[7px] rounded-l-xl">0<i class="fa fa-check pl-1"></i></span><span id="wrong" class="text-white bg-error p-[7px]">0<i class="fa fa-times pl-1"></i></span><span id="streak" class="text-white bg-warning p-[7px] rounded-r-xl">0<i class="fa fa-dashboard pl-2"></i></span>
       </div>
     </div>
     <!-- play list container -->
-    <div id="playList" class="flex justify-center items-center min-h-screen w-full z-10">
+    <div id="playList" class="flex justify-center items-center min-h-screen w-full z-10 mt-[-10vh] md:mt-0">
       <div id="startRound">
         <h1 id="startRoundHeading" class="text-7xl font-bold">Round 1</h1>
       </div>
       <div id="roundComponents" class="flex flex-col justify-center items-center gap-10 w-full">
-        <h1 id="playWord" class="text-7xl font-bold">Word is playing...</h1>
-        <input id="answer" class="input input-bordered input-success text-center sm:w-2/3 md:w-1/2 lg:w-2/5 2xl:w-1/3 mt-[3vh]" placeholder="Enter word here..." autocomplete="off">
-        <button id="submit" class="btn btn-success text-center text-center sm:w-2/3 md:w-1/2 lg:w-2/5 2xl:w-1/3 h-auto pt-4 pb-4 text-3xl text-white font-semibold">Submit Answer</button>
+        <!--<h1 id="playWord" class="text-7xl font-bold">Word is playing...</h1>-->
+        <input id="answer" class="input input-bordered input-neutral text-center sm:w-2/3 md:w-1/2 lg:w-2/5 h-auto pt-2 pb-2 md:pt-4 md:pb-4 text-2xl md:text-4xl mt-[3vh]" placeholder="Enter word here..." autocomplete="off">
+        <button id="submit" class="btn btn-accent text-center sm:w-2/3 md:w-1/2 lg:w-2/5 h-auto pt-2 pb-2 md:pt-4 md:pb-4 text-2xl md:text-3xl text-white font-bold md:font-semibold mt-[-0.5vh] md:mt-[3vh]">Play Word Again</button>
+        <button id="submit" class="btn btn-success text-center sm:w-2/3 md:w-1/2 lg:w-2/5 h-auto pt-2 pb-2 md:pt-4 md:pb-4 text-2xl md:text-3xl text-white font-bold md:font-semibold mt-[-25px]">Submit Answer</button>
       </div>
-    </div>
-  </div>
-  <div id="osError" class="bg-error h-screen">
-    <h1 class="sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-extrabold pt-[10vh] pl-[5vw] pr-[5vw] text-white">Browser/OS Incompatibility Error!</h1>
-    <div class="sm:text-md lg:text-lg xl:text-xl 2xl:text-2xl font-semibold pl-[5vw] pr-[5vw] pt-[7vh] text-white">
-      <p>It appears as if you have a compatibility issue with your browser or operating system as SpellingTree doesn't support either the browser that you are currently using or your operating system. Because the text-to-speech browser library only functions correctly on certain browsers and operating systems for SpellingTree at the moment, here are the only browser/operating system combinations that we currently support:</p>
-      <br>
-      <p>&nbsp;&nbsp;&nbsp; - <u>Browser</u>: Chrome <i class="fa fa-chrome"></i>, <u>Operating System</u>: Windows <i class="fa fa-windows"></i></p>
-      <br>
-      <p>Sorry for the inconvenience, and if you have any other issues or errors, please contact me at <u>steven.livingston.mathcomp@gmail.com</u></p>
     </div>
   </div>
   <!-- store the pronunciation audio in the html for base64 decoding purposes -->
