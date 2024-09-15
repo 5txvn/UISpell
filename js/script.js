@@ -9,7 +9,7 @@ let streak = 0;
 let utterancesInitialized = false;
 let currentWordIncorrect = false;
 $("#stats").hide();
-
+$("#playList").hide();
 
 //function for starting a new round
 function startRound() {
