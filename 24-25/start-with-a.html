@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Words Starting With A | UISpell</title>
+    <link rel="icon" href="../assets/icon.png" type="image/png">
     <!-- import tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- import daisyui -->
@@ -19,32 +20,36 @@
   <div id="body">
     <!-- page intro container -->
     <div id="main" class="flex justify-center items-center min-h-screen w-full">
-        <div class="flex flex-col justify-center items-center gap-5 w-full">
+        <div class="flex flex-col justify-center items-center gap-5 w-full ml-[5vw] mr-[5vw]">
           <h1 id="listTitle" class="text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-extrabold text-center">Words that Start with A</h1>
-          <h2 class="text-3xl font-semibold mt-[5vh]">A list by <span class="text-accent font-extrabold">Steven</span>, part of the <span class="text-primary font-extrabold">24-25 HS UIL collection</span></h2>
+          <h2 class="text-3xl font-semibold mt-[5vh] text-center">A list by <span class="text-accent font-extrabold">Steven</span>, part of the <a href=".." class="text-primary font-extrabold">24-25 HS UIL collection</a></h2>
           <button id="startRound" class="btn btn-success sm:w-2/3 md:w-1/2 lg:w-2/5 xl:w-1/3 h-auto text-3xl text-white font-bold pt-4 pb-4 mt-[4vh]">Start Practicing List</button>
           <button onclick="window.location.href=window.location.href.substring(0, window.location.href.lastIndexOf('/'))" class="btn btn-error sm:w-2/3 md:w-1/2 lg:w-2/5 xl:w-1/3 h-auto text-3xl text-white font-bold pt-4 pb-4">Return to Collection Homepage</button>
         </div>  
     </div>
     <!-- statistics container -->
     <div id="stats" class="flex items-center justify-center md:items-start md:justify-start text-2xl font-semibold h-auto z-0">
-      <div id="roundNumber" class="left-12 top-[42px] text-5xl font-bold h-auto absolute hidden md:block"></div>
-      <div id="otherStats" class="md:right-12 md:top-12 text-4xl font-semibold h-auto relative md:absolute mt-[5vh] items-center justify-center md:items-start md:justify-start">
+      <div id="roundNumber" class="left-12 md:top-12 text-5xl font-bold h-auto absolute hidden md:block"></div>
+      <div id="otherStats" class="md:right-12 md:top-14 text-4xl font-semibold h-auto relative md:absolute mt-[5vh] md:mt-0 items-center justify-center md:items-start md:justify-start">
         <span id="correct" class="text-white bg-success p-[7px] rounded-l-xl">0<i class="fa fa-check pl-1"></i></span><span id="wrong" class="text-white bg-error p-[7px]">0<i class="fa fa-times pl-1"></i></span><span id="streak" class="text-white bg-warning p-[7px] rounded-r-xl">0<i class="fa fa-dashboard pl-2"></i></span>
       </div>
     </div>
     <!-- play list container -->
-    <div id="playList" class="flex justify-center items-center min-h-screen w-full z-10 mt-[-10vh] md:mt-0">
+    <div id="playList" class="flex justify-center items-center min-h-screen w-full z-10 md:mt-0">
       <div id="startRound">
         <h1 id="startRoundHeading" class="text-7xl font-bold">Round 1</h1>
       </div>
       <div id="roundComponents" class="flex flex-col justify-center items-center gap-10 w-full">
         <!--<h1 id="playWord" class="text-7xl font-bold">Word is playing...</h1>-->
-        <input id="answer" class="input input-bordered input-neutral text-center sm:w-2/3 md:w-1/2 lg:w-2/5 h-auto pt-2 pb-2 md:pt-4 md:pb-4 text-2xl md:text-4xl mt-[3vh]" placeholder="Enter word here..." autocomplete="off">
-        <button id="submit" class="btn btn-accent text-center sm:w-2/3 md:w-1/2 lg:w-2/5 h-auto pt-2 pb-2 md:pt-4 md:pb-4 text-2xl md:text-3xl text-white font-bold md:font-semibold mt-[-0.5vh] md:mt-[3vh]">Play Word Again</button>
-        <button id="submit" class="btn btn-success text-center sm:w-2/3 md:w-1/2 lg:w-2/5 h-auto pt-2 pb-2 md:pt-4 md:pb-4 text-2xl md:text-3xl text-white font-bold md:font-semibold mt-[-25px]">Submit Answer</button>
+        <input id="answer" class="input input-bordered input-neutral text-center sm:w-2/3 md:w-1/2 lg:w-2/5 h-18 md:h-24 pt-2 pb-2 md:pt-6 md:pb-6 text-2xl md:text-4xl mt-[3vh]" placeholder="Enter word here..." autocomplete="off">
+        <button onclick="playWord();" class="btn btn-accent text-center sm:w-2/3 md:w-1/2 lg:w-2/5 h-auto pt-3 pb-3 md:pt-5 md:pb-5 text-2xl md:text-3xl text-white font-bold md:font-semibold mt-[2.5vh] md:mt-[3vh]">Play Word Again</button>
+        <button id="submit" class="btn btn-success text-center sm:w-2/3 md:w-1/2 lg:w-2/5 h-auto pt-3 pb-3 md:pt-5 md:pb-5 text-2xl md:text-3xl text-white font-bold md:font-semibold mt-[-25px]">Submit Answer</button>
       </div>
     </div>
+  </div>
+  <div id="incorrectWord" class="bg-error text-white font-extrabold min-h-screen">
+    <h1 class="pt-[10vh] text-8xl text-center">INCORRECT SPELLING</h1>
+    <p class="pt-[30vh] text-6xl text-center">Correct Spelling: <span id="correctSpelling" class="text-neutral-content underline">spelling</span></p>
   </div>
   <!-- store the pronunciation audio in the html for base64 decoding purposes -->
   <audio id="pronunciation" class="hidden"></audio>
