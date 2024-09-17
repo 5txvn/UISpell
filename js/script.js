@@ -10,6 +10,7 @@ let utterancesInitialized = false;
 let currentWordIncorrect = false;
 $("#stats").hide();
 $("#playList").hide();
+$("#incorectWord").hide();
 
 //function for starting a new round
 function startRound() {
@@ -31,6 +32,10 @@ function generateWord() {
         startRound();
     } else {
         word = temp[Math.floor(Math.random() * temp.length)];
+        while (words[word] == "") {
+          temp = temp.filter(removedWord => removedWord != word)
+          word = temp[Math.floor(Math.random() * temp.length)];
+        }
         $('#pronunciation').attr('src', `data:audio/mp3;base64,${words[word]}`);
         $("#pronunciation")[0].play();
         temp = temp.filter(string => string !== word);
@@ -52,12 +57,30 @@ function playWord() {
 
 //handles if the user has entered an incorrect word
 function incorrectWord() {
-    console.log("reached")
     currentWordIncorrect = true;
-    $("#submit").removeClass("bg-success").addClass("bg-error").text("Retry answer");
-    $("#answer").removeClass("input-success").addClass("input-error")
-    $("#playWord").removeClass("#text-7xl").addClass("text-4xl").addClass("w-1/2").addClass("text-center").html(`<span class='text-error'>Incorrect answer</span><br>The correct spelling is <u>${word}</u><br>Please re-type your answer`);
+    incorrectAnimation();
+    $("#submit").removeClass("btn-success").addClass("btn-error").text("Retry answer");
+    //$("#answer").removeClass("input-success").addClass("input-neutral")
+    //$("#playWord").removeClass("#text-7xl").addClass("text-4xl").addClass("w-1/2").addClass("text-center").html(`<span class='text-error'>Incorrect answer</span><br>The correct spelling is <u>${word}</u><br>Please re-type your answer`);
     playWord();
+}
+
+//incorrect word animation
+function incorrectAnimation() {
+  $("#body").hide();
+  $("#incorrectWord").show();
+  $("#correctSpelling").text(word)
+  $("#incorrectWord > h1").hide();
+  $("#incorrectWord > h1").fadeIn(750);
+  $("#incorrectWord > p").hide();
+  $("#incorrectWord > p").fadeIn(1500);
+  setTimeout(() => {
+    $("#incorrectWord").fadeOut(500);
+    setTimeout(() => {
+      $("#body").show();
+      $("input").focus();
+    }, 500)
+  }, 4000)
 }
 
 $("#answer").on("keydown", (event) => {
@@ -90,8 +113,7 @@ $("#answer").on("keydown", (event) => {
         currentWordIncorrect = false;
         const correctAudio = new Audio("../assets/correct.mp3");
         correctAudio.addEventListener("ended", () => {
-          $("#submit").addClass("bg-success").removeClass("bg-error").text("Submit Answer");
-          $("#answer").addClass("input-success").removeClass("input-error");
+          $("#submit").addClass("btn-success").removeClass("btn-error").text("Submit Answer");
           $("#playWord").addClass("#text-7xl").removeClass("text-4xl").removeClass("w-1/2").removeClass("text-center").text("Word is playing...");
           generateWord();
         })
@@ -141,8 +163,7 @@ $("#submit").click(() => {
       currentWordIncorrect = false;
       const correctAudio = new Audio("../assets/correct.mp3");
       correctAudio.addEventListener("ended", () => {
-        $("#submit").addClass("bg-success").removeClass("bg-error").text("Submit Answer");
-        $("#answer").addClass("input-success").removeClass("input-error");
+        $("#submit").addClass("btn-success").removeClass("btn-error").text("Submit Answer");
         $("#playWord").addClass("#text-7xl").removeClass("text-4xl").removeClass("w-1/2").removeClass("text-center").text("Word is playing...");
         generateWord();
       })
