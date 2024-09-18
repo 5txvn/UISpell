@@ -1,6 +1,5 @@
 //initialize all the variables needed and hide everything that needs to be hidden
 //const words = ["à la carte","aardvark","Abadan","abate","abhorrence","able-bodied","abscissa","absorbefacient","acanthus","acciaccatura","acclimatization","accumbent","acerbity","achondroplasia","acolyte","actinomycosis","ad hominem","ad nauseam","adamant","addlepated","adenoma","admiralty","adulate","adumbration","adventuresome","adynamia","aerophobia","affianced","agglomerate","aggravation","agitato","agog","aileron","akinesia","albuterol","aldermancy","algebraic","aliment","alla breve","allude","altazimuth","altruistic","Alzheimer’s disease","amarelle","Americanize","amoxicillin","amperage","amphisbaena","amulet","amygdaline","anacrusis","analogous","anaphylaxis","anathematize","andesite","Andorra","anemia","anemometry","Anglophile","anguished","ankylosis","annular ligament","anopheles","Antarctica","antepenultimate","anthropometry","anticyclone","antimacassar","antinome","antiphony","antiphrasis","aortography","aperçu","aplomb","apolitical","appertain","appoggiatura","apprehensible","aquamarine","Aquarius","Aramaic","archaeopteryx","archdiocese","arenaceous","argumentation","Aristophanes","arrogance","artifact","ascetic","asocial","aspidistra","assimilable","astragal","atamasco lily","atomism","au courant","aubergine","Auckland","Augean","auricular","auspice","australopithecine","automatism","Averno","aversion","avionics","avoirdupois"];
-let temp = Object.keys(words);
 let word = "";
 let round = 0;
 let correct = 0;
@@ -11,6 +10,13 @@ let currentWordIncorrect = false;
 $("#stats").hide();
 $("#playList").hide();
 $("#incorectWord").hide();
+
+const code = (new URLSearchParams(window.location.search)).get("code");
+$("#listTitle").text(`Words that Start with ${code}`);
+$("title").text(`Words Starting With ${code} | UISpell`);
+$("#mainScript").append(`<script src="./data/startWith${code}.js"></script>`);
+
+let temp = Object.keys(words);
 
 //function for starting a new round
 function startRound() {
@@ -103,7 +109,7 @@ $("#answer").on("keydown", (event) => {
         wrongAudio.addEventListener("ended", () => {
           incorrectWord();
         });
-        wrongAudio.volume = 0.6;
+        wrongAudio.volume = 0.45;
         wrongAudio.play();
       }
     } else {
@@ -126,7 +132,7 @@ $("#answer").on("keydown", (event) => {
         wrongAudio.addEventListener("ended", () => {
           incorrectWord();
         });
-        wrongAudio.volume = 0.6;
+        wrongAudio.volume = 0.45;
         wrongAudio.play();
       }
     }
@@ -153,7 +159,7 @@ $("#submit").click(() => {
       wrongAudio.addEventListener("ended", () => {
         incorrectWord();
       });
-      wrongAudio.volume = 0.6;
+      wrongAudio.volume = 0.45;
       wrongAudio.play();
     }
   } else {
@@ -176,7 +182,7 @@ $("#submit").click(() => {
       wrongAudio.addEventListener("ended", () => {
         incorrectWord();
       });
-      wrongAudio.volume = 0.6;
+      wrongAudio.volume = 0.45;
       wrongAudio.play();
     }
   }
