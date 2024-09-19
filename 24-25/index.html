@@ -20,7 +20,10 @@
 </body>
 <script>
     [...'abcdefghijklmnopqrstuvwxyz'].forEach(letter => {
-        $("#placeholder").append(`<p class="text-2xl font-semibold"> - <a class="text-info underline" href="./play-list?code=${letter.toUpperCase()}">Words that start with the letter ${letter.toUpperCase()}</a></p>`)
+        $("#placeholder").append(`<p class="text-2xl font-semibold cursor-pointer"> - <a class="text-info underline" onclick="window.location.href='./play-list?code=${letter.toUpperCase()}'">Words that start with the letter ${letter.toUpperCase()}</a></p>`)
+    })
+    $("a").click(() => {
+        console.log($(this).text());
     })
 </script>
 </html>

@@ -7,16 +7,24 @@ let wrong = 0;
 let streak = 0;
 let utterancesInitialized = false;
 let currentWordIncorrect = false;
+const rootPath = window.location.href.split("/")[3].toLowerCase() === "uispell" ? "/UISpell/" : "/";
 $("#stats").hide();
 $("#playList").hide();
-$("#incorectWord").hide();
+$("#incorrectWord").hide();
+$("#main").hide();
 
-const code = (new URLSearchParams(window.location.search)).get("code");
-$("#listTitle").text(`Words that Start with ${code}`);
-$("title").text(`Words Starting With ${code} | UISpell`);
-$("#mainScript").append(`<script src="./data/startWith${code}.js"></script>`);
 
-let temp = Object.keys(words);
+let code;
+let temp;
+$("#select").on("change", () => {
+  code = $("#select").find(":selected").val();
+  $("#listTitle").text(`Words that Start with ${code}`);
+  $("title").text(`Words Starting With ${code} | UISpell`);
+  $("#mainScript").prepend(`<script src="${rootPath}24-25/data/startWith${code}.js"></script>`);
+  temp = Object.keys(words);
+  $("#select").hide();
+  $("#main").show();
+});
 
 //function for starting a new round
 function startRound() {
@@ -79,15 +87,36 @@ function incorrectAnimation() {
   $("#incorrectWord > h1").hide();
   $("#incorrectWord > h1").fadeIn(750);
   $("#incorrectWord > p").hide();
-  $("#incorrectWord > p").fadeIn(1500);
+  $("#incorrectWord > p").fadeIn(1000);
   setTimeout(() => {
     $("#incorrectWord").fadeOut(500);
     setTimeout(() => {
       $("#body").show();
       $("input").focus();
     }, 500)
-  }, 4000)
+  }, 3000)
 }
+
+//handle accent input and also word skipping commands
+$("#answer").on("keyup", () => {
+  if (["/aa", "/ag", "/ea", "/eg", "/ia", "/ig", "/oa", "/og", "/ua", "/ug", "/ac", "/ec", "/ic", "/oc", "/uc"].some(accentBind => $("#answer").val().includes(accentBind))) {
+    $("#answer").val(
+      $("#answer").val()
+      .replace("/aa", "á").replace("/ag", "à").replace("/ac", "â")
+      .replace("/ea", "é").replace("/eg", "è").replace("/ec", "ê")
+      .replace("/ia", "í").replace("/ig", "ì").replace("/ic", "î")
+      .replace("/oa", "ó").replace("/og", "ò").replace("/oc", "ô")
+      .replace("/ua", "ú").replace("/ug", "ù").replace("/uc", "û")
+    );
+  } else if ($("#answer").val().toLowerCase() === "/skip") {
+    $("#answer").blur().val("");
+    generateWord();
+  } else if ($("#answer").val().toLowerCase() === "/remove") {
+    $("#answer").blur().val("");
+    temp = temp.filter(removedWord => removedWord != word);
+    generateWord();
+  }
+})
 
 $("#answer").on("keydown", (event) => {
   if (event.key === "Enter") {
@@ -96,7 +125,7 @@ $("#answer").on("keydown", (event) => {
         correct++; streak++;
         $("#correct").html(correct + '<i class="fa fa-check pl-1"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
         $("#answer").val("").blur();
-        const correctAudio = new Audio("../assets/correct.mp3");
+        const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
         correctAudio.addEventListener("ended", () => {
           generateWord();
         })
@@ -105,7 +134,7 @@ $("#answer").on("keydown", (event) => {
         wrong++; streak = 0;
         $("#wrong").html(wrong + '<i class="fa fa-times pl-2"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
         $("#answer").val("").blur();
-        const wrongAudio = new Audio("../assets/wrong.mp3");
+        const wrongAudio = new Audio(`${rootPath}assets/wrong.mp3`);
         wrongAudio.addEventListener("ended", () => {
           incorrectWord();
         });
@@ -117,7 +146,7 @@ $("#answer").on("keydown", (event) => {
         temp.push(word);
         $("#answer").val("").blur();
         currentWordIncorrect = false;
-        const correctAudio = new Audio("../assets/correct.mp3");
+        const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
         correctAudio.addEventListener("ended", () => {
           $("#submit").addClass("btn-success").removeClass("btn-error").text("Submit Answer");
           $("#playWord").addClass("#text-7xl").removeClass("text-4xl").removeClass("w-1/2").removeClass("text-center").text("Word is playing...");
@@ -128,7 +157,7 @@ $("#answer").on("keydown", (event) => {
         wrong++; streak = 0;
         $("#wrong").html(wrong + '<i class="fa fa-times pl-2"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
         $("#answer").val("").blur();
-        const wrongAudio = new Audio("../assets/wrong.mp3");
+        const wrongAudio = new Audio(`${rootPath}assets/wrong.mp3`);
         wrongAudio.addEventListener("ended", () => {
           incorrectWord();
         });
@@ -146,7 +175,7 @@ $("#submit").click(() => {
       correct++; streak++;
       $("#correct").html(correct + '<i class="fa fa-check pl-1"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
       $("#answer").val("").blur();
-      const correctAudio = new Audio("../assets/correct.mp3");
+      const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
       correctAudio.addEventListener("ended", () => {
         generateWord();
       })
@@ -155,7 +184,7 @@ $("#submit").click(() => {
       wrong++; streak = 0;
       $("#wrong").html(wrong + '<i class="fa fa-times pl-2"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
       $("#answer").val("").blur();
-      const wrongAudio = new Audio("../assets/wrong.mp3");
+      const wrongAudio = new Audio(`${rootPath}assets/wrong.mp3`);
       wrongAudio.addEventListener("ended", () => {
         incorrectWord();
       });
@@ -167,7 +196,7 @@ $("#submit").click(() => {
       temp.push(word);
       $("#answer").val("").blur();
       currentWordIncorrect = false;
-      const correctAudio = new Audio("../assets/correct.mp3");
+      const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
       correctAudio.addEventListener("ended", () => {
         $("#submit").addClass("btn-success").removeClass("btn-error").text("Submit Answer");
         $("#playWord").addClass("#text-7xl").removeClass("text-4xl").removeClass("w-1/2").removeClass("text-center").text("Word is playing...");
@@ -178,7 +207,7 @@ $("#submit").click(() => {
       wrong++; streak = 0;
       $("#wrong").html(wrong + '<i class="fa fa-times pl-2"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
       $("#answer").val("").blur();
-      const wrongAudio = new Audio("../assets/wrong.mp3");
+      const wrongAudio = new Audio(`${rootPath}assets/wrong.mp3`);
       wrongAudio.addEventListener("ended", () => {
         incorrectWord();
       });
