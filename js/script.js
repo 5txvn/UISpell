@@ -99,7 +99,9 @@ function incorrectAnimation() {
 
 //handle accent input and also word skipping commands
 $("#answer").on("keyup", () => {
-  if (["/aa", "/ag", "/ea", "/eg", "/ia", "/ig", "/oa", "/og", "/ua", "/ug", "/ac", "/ec", "/ic", "/oc", "/uc"].some(accentBind => $("#answer").val().includes(accentBind))) {
+  if (["/aa", "/ag", "/ea", "/eg", "/ia", "/ig", "/oa", "/og", "/ua", "/ug", 
+    "/ac", "/ec", "/ic", "/oc", "/uc"
+    ].some(accentBind => $("#answer").val().includes(accentBind))) {
     $("#answer").val(
       $("#answer").val()
       .replace("/aa", "á").replace("/ag", "à").replace("/ac", "â")
