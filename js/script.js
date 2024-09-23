@@ -50,7 +50,7 @@ function startRound() {
 function generateWord() {
     $("#playWord").text("Word is playing...");
     if (temp.length == 0) {
-        temp = words;
+        temp = Object.keys(words);
         startRound();
     } else {
         word = temp[Math.floor(Math.random() * temp.length)];
