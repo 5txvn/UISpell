@@ -12,6 +12,14 @@ $("#stats").hide();
 $("#playList").hide();
 $("#incorrectWord").hide();
 $("#main").hide();
+$("#buttonGrid").hide();
+
+
+const letters = [..."abcdefghijklmnopqrstuvwxyz"];
+
+letters.forEach(letter => {
+  $("#buttonGrid").append(`<button class="btn btn-primary btn-bordered w-72 text-3xl h-auto font-extrabold">Starts with ${letter.toUpperCase()}</button>`)
+})
 
 
 let code;
@@ -78,6 +86,26 @@ function incorrectWord() {
     //$("#playWord").removeClass("#text-7xl").addClass("text-4xl").addClass("w-1/2").addClass("text-center").html(`<span class='text-error'>Incorrect answer</span><br>The correct spelling is <u>${word}</u><br>Please re-type your answer`);
     playWord();
 }
+
+const accentedLetters = [["Á", "É", "Í", "Ó", "Ú", "á", "é", "í", "ó", "ú"], ["À", "È", "Ì", "Ò", "Ù", "à", "è", "ì", "ò", "ù"], ["Â", "Ê", "Î", "Ô", "Û", "â", "ê", "î", "ô", "û"], ["Ä", "Ë", "Ï", "Ö", "Ü", "ä", "ë", "ï", "ö", "ü"]];
+let currentlyPrimary = true;
+accentedLetters.forEach((group, index, arr) => {
+  let buttonsString = "";
+  //let count = 1;
+  group.forEach(letter => {
+    buttonsString += `<button class="btn btn-${currentlyPrimary ? "primary" : "secondary"} btn-bordered font-black w-1/12" onclick="updateAccent('${letter}')">${letter}</button>`
+  })
+  $("#accentButtons").append(`
+    <div class="flex flex-row justify-center items-center gap-2">
+        ${buttonsString}
+    </div>
+    ${index === arr.length - 1 ? '<div class="mb-12"></div>' : '<hr class="mt-6 mb-6">'}
+  `);
+  currentlyPrimary = currentlyPrimary ? false : true;
+})
+
+//updates for accentation marks
+const updateAccent = letter => $("#answer").val($("#answer").val() + letter);
 
 //incorrect word animation
 function incorrectAnimation() {
