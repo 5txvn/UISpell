@@ -1,3 +1,5 @@
+//my_modal_2.show();
+console.log(!localStorage.getItem("test"))
 //initialize all the variables needed and hide everything that needs to be hidden
 //const words = ["à la carte","aardvark","Abadan","abate","abhorrence","able-bodied","abscissa","absorbefacient","acanthus","acciaccatura","acclimatization","accumbent","acerbity","achondroplasia","acolyte","actinomycosis","ad hominem","ad nauseam","adamant","addlepated","adenoma","admiralty","adulate","adumbration","adventuresome","adynamia","aerophobia","affianced","agglomerate","aggravation","agitato","agog","aileron","akinesia","albuterol","aldermancy","algebraic","aliment","alla breve","allude","altazimuth","altruistic","Alzheimer’s disease","amarelle","Americanize","amoxicillin","amperage","amphisbaena","amulet","amygdaline","anacrusis","analogous","anaphylaxis","anathematize","andesite","Andorra","anemia","anemometry","Anglophile","anguished","ankylosis","annular ligament","anopheles","Antarctica","antepenultimate","anthropometry","anticyclone","antimacassar","antinome","antiphony","antiphrasis","aortography","aperçu","aplomb","apolitical","appertain","appoggiatura","apprehensible","aquamarine","Aquarius","Aramaic","archaeopteryx","archdiocese","arenaceous","argumentation","Aristophanes","arrogance","artifact","ascetic","asocial","aspidistra","assimilable","astragal","atamasco lily","atomism","au courant","aubergine","Auckland","Augean","auricular","auspice","australopithecine","automatism","Averno","aversion","avionics","avoirdupois"];
 let word = "";
@@ -13,12 +15,64 @@ $("#playList").hide();
 $("#incorrectWord").hide();
 $("#main").hide();
 $("#buttonGrid").hide();
+//$("#select").hide();
+//$("#startRoundHeading").hide();
 
 
 const letters = [..."abcdefghijklmnopqrstuvwxyz"];
 
 letters.forEach(letter => {
   $("#buttonGrid").append(`<button class="btn btn-primary btn-bordered w-72 text-3xl h-auto font-extrabold">Starts with ${letter.toUpperCase()}</button>`)
+});
+
+//set up the settings panel
+let successAudioVolume;
+if(!localStorage.getItem("successAudioVolume")) {
+  $("#successAudioVolume").val("80");
+  $("#successAudioVolumeText").text("Success Audio Volume: 80%");
+  successAudioVolume = 0.8;
+} else {
+  $("#successAudioVolume").val(localStorage.getItem("successAudioVolume"));
+  $("#successAudioVolumeText").text(`Success Audio Volume: ${localStorage.getItem("successAudioVolume")}%`);
+  successAudioVolume = parseFloat(localStorage.getItem("successAudioVolume") / 100);
+}
+$("#successAudioVolume").on("input", () => {
+  localStorage.setItem("successAudioVolume", $("#successAudioVolume").val());
+  $("#successAudioVolumeText").text(`Success Audio Volume: ${localStorage.getItem("successAudioVolume")}%`);
+  successAudioVolume = parseFloat(localStorage.getItem("successAudioVolume") / 100);
+})
+
+let wrongAudioVolume;
+if(!localStorage.getItem("wrongAudioVolume")) {
+  $("#wrongAudioVolume").val("80");
+  $("#wrongAudioVolumeText").text("Incorrect Audio Volume: 80%");
+  wrongAudioVolume = 0.8;
+} else {
+  $("#wrongAudioVolume").val(localStorage.getItem("wrongAudioVolume"));
+  $("#wrongAudioVolumeText").text(`Incorrect Audio Volume: ${localStorage.getItem("wrongAudioVolume")}%`);
+  wrongAudioVolume = parseFloat(localStorage.getItem("wrongAudioVolume") / 100);
+}
+$("#wrongAudioVolume").on("input", () => {
+  localStorage.setItem("wrongAudioVolume", $("#wrongAudioVolume").val());
+  $("#wrongAudioVolumeText").text(`Incorrect Audio Volume: ${localStorage.getItem("wrongAudioVolume")}%`);
+  wrongAudioVolume = parseFloat(localStorage.getItem("wrongAudioVolume") / 100);
+})
+
+let successAudioDisabled;
+if(!localStorage.getItem("successAudioDisabled")) {
+  $("#playSuccessAudio").attr("checked", "");
+  successAudioDisabled = false;
+} else {
+  if(localStorage.getItem("successAudioDisabled") == "false") {
+    $("#playSuccessAudio").attr("checked", "");
+    successAudioDisabled = false;
+  } else {
+    successAudioDisabled = true;
+  }
+}
+$("#playSuccessAudio").on("input", () => {
+  successAudioDisabled = !$("#playSuccessAudio").prop("checked");
+  localStorage.setItem("successAudioDisabled", String(!successAudioDisabled))
 })
 
 
@@ -87,13 +141,14 @@ function incorrectWord() {
     playWord();
 }
 
-const accentedLetters = [["Á", "É", "Í", "Ó", "Ú", "á", "é", "í", "ó", "ú"], ["À", "È", "Ì", "Ò", "Ù", "à", "è", "ì", "ò", "ù"], ["Â", "Ê", "Î", "Ô", "Û", "â", "ê", "î", "ô", "û"], ["Ä", "Ë", "Ï", "Ö", "Ü", "ä", "ë", "ï", "ö", "ü"]];
+//const accentedLetters = [["Á", "É", "Í", "Ó", "Ú", "á", "é", "í", "ó", "ú"], ["À", "È", "Ì", "Ò", "Ù", "à", "è", "ì", "ò", "ù"], ["Â", "Ê", "Î", "Ô", "Û", "â", "ê", "î", "ô", "û"], ["Ä", "Ë", "Ï", "Ö", "Ü", "ä", "ë", "ï", "ö", "ü"], ["Ã", ""]];
+const accentedLetters = [["Á", "á", "À", "à", "Â", "â", "Ä", "ä", "Ã", "ã", "Å", "å"], ["É", "é", "È", "è", "Ê", "ê", "Ë", "ë"], ["Í", "í", "Ì", "ì", "Î", "î", "Ï", "ï"], ["Ó", "ó", "Ò", "ò", "Ô", "ô", "Ö", "ö", "Õ", "õ", "Ø", "ø"], ["Ú", "ú", "Ù", "ù", "Û", "û", "Ü", "ü"], ["Æ", "æ", "Ç", "ç", "Ñ", "ñ", "Œ", "œ", "ß"]]
 let currentlyPrimary = true;
 accentedLetters.forEach((group, index, arr) => {
   let buttonsString = "";
   //let count = 1;
   group.forEach(letter => {
-    buttonsString += `<button class="btn btn-${currentlyPrimary ? "primary" : "secondary"} btn-bordered font-black w-1/12" onclick="updateAccent('${letter}')">${letter}</button>`
+    buttonsString += `<button class="btn btn-${currentlyPrimary ? "success" : "warning"} text-white btn-bordered font-black w-[6%]" onclick="updateAccent('${letter}')">${letter}</button>`
   })
   $("#accentButtons").append(`
     <div class="flex flex-row justify-center items-center gap-2">
@@ -127,7 +182,8 @@ function incorrectAnimation() {
 
 //handle accent input and also word skipping commands
 $("#answer").on("keyup", () => {
-  if (["/aa", "/ag", "/ea", "/eg", "/ia", "/ig", "/oa", "/og", "/ua", "/ug", 
+  if ([
+    "/aa", "/ag", "/ea", "/eg", "/ia", "/ig", "/oa", "/og", "/ua", "/ug", 
     "/ac", "/ec", "/ic", "/oc", "/uc"
     ].some(accentBind => $("#answer").val().includes(accentBind))) {
     $("#answer").val(
@@ -155,11 +211,18 @@ $("#answer").on("keydown", (event) => {
         correct++; streak++;
         $("#correct").html(correct + '<i class="fa fa-check pl-1"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
         $("#answer").val("").blur();
-        const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
-        correctAudio.addEventListener("ended", () => {
+
+        //handle playing the success audio
+        if(!successAudioDisabled) {
+          const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
+          correctAudio.addEventListener("ended", () => {
+            generateWord();
+          })
+          correctAudio.volume = successAudioVolume;
+          correctAudio.play();
+        } else {
           generateWord();
-        })
-        correctAudio.play();
+        }
       } else {
         wrong++; streak = 0;
         $("#wrong").html(wrong + '<i class="fa fa-times pl-2"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
@@ -168,7 +231,7 @@ $("#answer").on("keydown", (event) => {
         wrongAudio.addEventListener("ended", () => {
           incorrectWord();
         });
-        wrongAudio.volume = 0.45;
+        wrongAudio.volume = wrongAudioVolume;
         wrongAudio.play();
       }
     } else {
@@ -176,13 +239,22 @@ $("#answer").on("keydown", (event) => {
         temp.push(word);
         $("#answer").val("").blur();
         currentWordIncorrect = false;
-        const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
-        correctAudio.addEventListener("ended", () => {
+
+        //handle playing the success audio
+        if(!successAudioDisabled) {
+          const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
+          correctAudio.addEventListener("ended", () => {
+            $("#submit").addClass("btn-success").removeClass("btn-error").text("Submit Answer");
+            $("#playWord").addClass("#text-7xl").removeClass("text-4xl").removeClass("w-1/2").removeClass("text-center").text("Word is playing...");
+            generateWord();
+          })
+          correctAudio.volume = successAudioVolume;
+          correctAudio.play();
+        } else {
           $("#submit").addClass("btn-success").removeClass("btn-error").text("Submit Answer");
           $("#playWord").addClass("#text-7xl").removeClass("text-4xl").removeClass("w-1/2").removeClass("text-center").text("Word is playing...");
           generateWord();
-        })
-        correctAudio.play();
+        }
       } else {
         wrong++; streak = 0;
         $("#wrong").html(wrong + '<i class="fa fa-times pl-2"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
@@ -191,7 +263,7 @@ $("#answer").on("keydown", (event) => {
         wrongAudio.addEventListener("ended", () => {
           incorrectWord();
         });
-        wrongAudio.volume = 0.45;
+        wrongAudio.volume = wrongAudioVolume;
         wrongAudio.play();
       }
     }
@@ -205,11 +277,18 @@ $("#submit").click(() => {
       correct++; streak++;
       $("#correct").html(correct + '<i class="fa fa-check pl-1"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
       $("#answer").val("").blur();
-      const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
-      correctAudio.addEventListener("ended", () => {
+      
+      //handle playing the success audio
+      if(!successAudioDisabled) {
+        const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
+        correctAudio.addEventListener("ended", () => {
+          generateWord();
+        })
+        correctAudio.volume = successAudioVolume;
+        correctAudio.play();
+      } else {
         generateWord();
-      })
-      correctAudio.play();
+      }
     } else {
       wrong++; streak = 0;
       $("#wrong").html(wrong + '<i class="fa fa-times pl-2"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
@@ -218,7 +297,7 @@ $("#submit").click(() => {
       wrongAudio.addEventListener("ended", () => {
         incorrectWord();
       });
-      wrongAudio.volume = 0.45;
+      wrongAudio.volume = wrongAudioVolume;
       wrongAudio.play();
     }
   } else {
@@ -226,13 +305,22 @@ $("#submit").click(() => {
       temp.push(word);
       $("#answer").val("").blur();
       currentWordIncorrect = false;
-      const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
-      correctAudio.addEventListener("ended", () => {
+
+      //handle playing the success audio
+      if(!successAudioDisabled) {
+        const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
+        correctAudio.addEventListener("ended", () => {
+          $("#submit").addClass("btn-success").removeClass("btn-error").text("Submit Answer");
+          $("#playWord").addClass("#text-7xl").removeClass("text-4xl").removeClass("w-1/2").removeClass("text-center").text("Word is playing...");
+          generateWord();
+        })
+        correctAudio.volume = successAudioVolume;
+        correctAudio.play();
+      } else {
         $("#submit").addClass("btn-success").removeClass("btn-error").text("Submit Answer");
         $("#playWord").addClass("#text-7xl").removeClass("text-4xl").removeClass("w-1/2").removeClass("text-center").text("Word is playing...");
         generateWord();
-      })
-      correctAudio.play();
+      }
     } else {
       wrong++; streak = 0;
       $("#wrong").html(wrong + '<i class="fa fa-times pl-2"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
@@ -241,7 +329,7 @@ $("#submit").click(() => {
       wrongAudio.addEventListener("ended", () => {
         incorrectWord();
       });
-      wrongAudio.volume = 0.45;
+      wrongAudio.volume = wrongAudioVolume;
       wrongAudio.play();
     }
   }
