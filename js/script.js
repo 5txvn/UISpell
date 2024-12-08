@@ -175,7 +175,9 @@ function incorrectAnimation() {
     $("#incorrectWord").fadeOut(500);
     setTimeout(() => {
       $("#body").show();
-      $("input").focus();
+      setTimeout(() => {
+        $("#answer").focus();
+      }, 250);
     }, 500)
   }, 3000)
 }
