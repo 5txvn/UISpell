@@ -120,11 +120,11 @@ function generateWord() {
         }
         $('#pronunciation').attr('src', `data:audio/mp3;base64,${words[word]}`);
         $("#pronunciation")[0].play();
+        $("#answer").focus();
         temp = temp.filter(string => string !== word);
         $("#pronunciation").on("ended", () => {
             if (!currentWordIncorrect) {
                 $("#playWord").html("Click <span onclick='playWord()' class='text-success'>me</span> to play word again");
-                $("#answer").focus();
             }
         });
     }
