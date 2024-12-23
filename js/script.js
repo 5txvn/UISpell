@@ -80,9 +80,15 @@ let code;
 let temp;
 $("#select").on("change", () => {
   code = $("#select").find(":selected").val();
-  $("#listTitle").text(`Words that Start with ${code}`);
-  $("title").text(`Words Starting With ${code} | UISpell`);
-  $("#mainScript").prepend(`<script src="${rootPath}24-25/data/startWith${code}.js"></script>`);
+  if (code == "all") {
+    $("#listTitle").text(`List of All Words`);
+    $("title").text(`List of All Words | UISpell`);
+    $("#mainScript").prepend(`<script src="${rootPath}24-25/data/all.js"></script>`);
+  } else {
+    $("#listTitle").text(`Words that Start with ${code}`);
+    $("title").text(`Words Starting With ${code} | UISpell`);
+    $("#mainScript").prepend(`<script src="${rootPath}24-25/data/startWith${code}.js"></script>`);
+  }
   temp = Object.keys(words);
   $("#select").hide();
   $("#main").show();
@@ -186,15 +192,16 @@ function incorrectAnimation() {
 $("#answer").on("keyup", () => {
   if ([
     "/aa", "/ag", "/ea", "/eg", "/ia", "/ig", "/oa", "/og", "/ua", "/ug", 
-    "/ac", "/ec", "/ic", "/oc", "/uc"
+    "/ac", "/ec", "/ic", "/oc", "/uc", "/cd", "/au", "/eu", "/iu", "/ou", "/uu", "/nt"
     ].some(accentBind => $("#answer").val().includes(accentBind))) {
     $("#answer").val(
       $("#answer").val()
-      .replace("/aa", "á").replace("/ag", "à").replace("/ac", "â")
-      .replace("/ea", "é").replace("/eg", "è").replace("/ec", "ê")
-      .replace("/ia", "í").replace("/ig", "ì").replace("/ic", "î")
-      .replace("/oa", "ó").replace("/og", "ò").replace("/oc", "ô")
-      .replace("/ua", "ú").replace("/ug", "ù").replace("/uc", "û")
+      .replace("/aa", "á").replace("/ag", "à").replace("/ac", "â").replace("/au", "ä")
+      .replace("/ea", "é").replace("/eg", "è").replace("/ec", "ê").replace("/eu", "ë")
+      .replace("/ia", "í").replace("/ig", "ì").replace("/ic", "î").replace("/iu", "ï")
+      .replace("/oa", "ó").replace("/og", "ò").replace("/oc", "ô").replace("/ou", "ö")
+      .replace("/ua", "ú").replace("/ug", "ù").replace("/uc", "û").replace("/uu", "ü")
+      .replace("/cd", "ç").replace("/nt", "ñ")
     );
   } else if ($("#answer").val().toLowerCase() === "/skip") {
     $("#answer").blur().val("");
