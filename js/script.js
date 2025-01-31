@@ -1,8 +1,5 @@
-//my_modal_2.show();
-console.log(!localStorage.getItem("test"))
-//initialize all the variables needed and hide everything that needs to be hidden
-//const words = ["à la carte","aardvark","Abadan","abate","abhorrence","able-bodied","abscissa","absorbefacient","acanthus","acciaccatura","acclimatization","accumbent","acerbity","achondroplasia","acolyte","actinomycosis","ad hominem","ad nauseam","adamant","addlepated","adenoma","admiralty","adulate","adumbration","adventuresome","adynamia","aerophobia","affianced","agglomerate","aggravation","agitato","agog","aileron","akinesia","albuterol","aldermancy","algebraic","aliment","alla breve","allude","altazimuth","altruistic","Alzheimer’s disease","amarelle","Americanize","amoxicillin","amperage","amphisbaena","amulet","amygdaline","anacrusis","analogous","anaphylaxis","anathematize","andesite","Andorra","anemia","anemometry","Anglophile","anguished","ankylosis","annular ligament","anopheles","Antarctica","antepenultimate","anthropometry","anticyclone","antimacassar","antinome","antiphony","antiphrasis","aortography","aperçu","aplomb","apolitical","appertain","appoggiatura","apprehensible","aquamarine","Aquarius","Aramaic","archaeopteryx","archdiocese","arenaceous","argumentation","Aristophanes","arrogance","artifact","ascetic","asocial","aspidistra","assimilable","astragal","atamasco lily","atomism","au courant","aubergine","Auckland","Augean","auricular","auspice","australopithecine","automatism","Averno","aversion","avionics","avoirdupois"];
 let word = "";
+let tempAltSpelling = "";
 let round = 0;
 let correct = 0;
 let wrong = 0;
@@ -15,6 +12,9 @@ $("#playList").hide();
 $("#incorrectWord").hide();
 $("#main").hide();
 $("#buttonGrid").hide();
+toastr.options.closeEasing = "swing";
+toastr.options.progressBar = true;
+toastr.options.positionClass = "toast-top-full-width";
 //$("#select").hide();
 //$("#startRoundHeading").hide();
 
@@ -89,10 +89,22 @@ $("#select").on("change", () => {
     $("title").text(`Words Starting With ${code} | UISpell`);
     $("#mainScript").prepend(`<script src="${rootPath}24-25/data/startWith${code}.js"></script>`);
   }
+  $("#mainScript").prepend(`<script src="${rootPath}24-25/data/alternativeSpellings.js"></script>`);
   temp = Object.keys(words);
   $("#select").hide();
   $("#main").show();
 });
+
+//function for checking alternative spellings
+function hasAlternativeSpellings(checkWord) {
+  let result = false;
+  for(const alternativeSpelling of alternativeSpellings) {
+    if(alternativeSpelling.includes(checkWord)) {
+      result = alternativeSpelling.filter(spelling => spelling != checkWord)[0];
+    }
+  }
+  return result
+}
 
 //function for starting a new round
 function startRound() {
@@ -108,7 +120,6 @@ function startRound() {
 
 //generate a word and play its audio
 function generateWord() {
-    $("#playWord").text("Word is playing...");
     if (temp.length == 0) {
         temp = Object.keys(words);
         startRound();
@@ -130,24 +141,9 @@ function generateWord() {
     }
 }
 
-//function to play a word again if the user didn't understand it the first time
-function playWord() {
-    $('#pronunciation').attr('src', `data:audio/mp3;base64,${words[word]}`);
-    $("#pronunciation")[0].play();
-    $("#answer").focus();
-}
+const playWord = () => { $('#pronunciation').attr('src', `data:audio/mp3;base64,${words[word]}`); $("#pronunciation")[0].play(); $("#answer").focus(); }
+const incorrectWord = () => { currentWordIncorrect = true; incorrectAnimation(); $("#submit").removeClass("btn-success").removeClass("btn-warning").addClass("btn-error").text("Retry answer"); playWord(); }
 
-//handles if the user has entered an incorrect word
-function incorrectWord() {
-    currentWordIncorrect = true;
-    incorrectAnimation();
-    $("#submit").removeClass("btn-success").addClass("btn-error").text("Retry answer");
-    //$("#answer").removeClass("input-success").addClass("input-neutral")
-    //$("#playWord").removeClass("#text-7xl").addClass("text-4xl").addClass("w-1/2").addClass("text-center").html(`<span class='text-error'>Incorrect answer</span><br>The correct spelling is <u>${word}</u><br>Please re-type your answer`);
-    playWord();
-}
-
-//const accentedLetters = [["Á", "É", "Í", "Ó", "Ú", "á", "é", "í", "ó", "ú"], ["À", "È", "Ì", "Ò", "Ù", "à", "è", "ì", "ò", "ù"], ["Â", "Ê", "Î", "Ô", "Û", "â", "ê", "î", "ô", "û"], ["Ä", "Ë", "Ï", "Ö", "Ü", "ä", "ë", "ï", "ö", "ü"], ["Ã", ""]];
 const accentedLetters = [["Á", "á", "À", "à", "Â", "â", "Ä", "ä", "Ã", "ã", "Å", "å"], ["É", "é", "È", "è", "Ê", "ê", "Ë", "ë"], ["Í", "í", "Ì", "ì", "Î", "î", "Ï", "ï"], ["Ó", "ó", "Ò", "ò", "Ô", "ô", "Ö", "ö", "Õ", "õ", "Ø", "ø"], ["Ú", "ú", "Ù", "ù", "Û", "û", "Ü", "ü"], ["Æ", "æ", "Ç", "ç", "Ñ", "ñ", "Œ", "œ", "ß"]]
 let currentlyPrimary = true;
 accentedLetters.forEach((group, index, arr) => {
@@ -170,13 +166,7 @@ const updateAccent = letter => $("#answer").val($("#answer").val() + letter);
 
 //incorrect word animation
 function incorrectAnimation() {
-  $("#body").hide();
-  $("#incorrectWord").show();
-  $("#correctSpelling").text(word)
-  $("#incorrectWord > h1").hide();
-  $("#incorrectWord > h1").fadeIn(750);
-  $("#incorrectWord > p").hide();
-  $("#incorrectWord > p").fadeIn(1000);
+  $("#body").hide(); $("#incorrectWord").show(); let tempString = !hasAlternativeSpellings(word) ? "" : ` (or ${hasAlternativeSpellings(word)})`; $("#correctSpelling").text(word + tempString); $("#incorrectWord > h1").hide(); $("#incorrectWord > h1").fadeIn(750); $("#incorrectWord > p").hide(); $("#incorrectWord > p").fadeIn(1000);
   setTimeout(() => {
     $("#incorrectWord").fadeOut(500);
     setTimeout(() => {
@@ -213,104 +203,36 @@ $("#answer").on("keyup", () => {
   }
 })
 
-$("#answer").on("keydown", (event) => {
-  if (event.key === "Enter") {
-    if (!currentWordIncorrect) {
-      if ($("#answer").val().trim() === word) {
-        correct++; streak++;
-        $("#correct").html(correct + '<i class="fa fa-check pl-1"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
-        $("#answer").val("").blur();
-
-        //handle playing the success audio
-        if(!successAudioDisabled) {
-          const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
-          correctAudio.addEventListener("ended", () => {
-            generateWord();
-          })
-          correctAudio.volume = successAudioVolume;
-          correctAudio.play();
-        } else {
-          generateWord();
-        }
-      } else {
-        wrong++; streak = 0;
-        $("#wrong").html(wrong + '<i class="fa fa-times pl-2"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
-        $("#answer").val("").blur();
-        const wrongAudio = new Audio(`${rootPath}assets/wrong.mp3`);
-        wrongAudio.addEventListener("ended", () => {
-          incorrectWord();
-        });
-        wrongAudio.volume = wrongAudioVolume;
-        wrongAudio.play();
-      }
-    } else {
-      if ($("#answer").val().trim() === word) {
-        temp.push(word);
-        $("#answer").val("").blur();
-        currentWordIncorrect = false;
-
-        //handle playing the success audio
-        if(!successAudioDisabled) {
-          const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
-          correctAudio.addEventListener("ended", () => {
-            $("#submit").addClass("btn-success").removeClass("btn-error").text("Submit Answer");
-            $("#playWord").addClass("#text-7xl").removeClass("text-4xl").removeClass("w-1/2").removeClass("text-center").text("Word is playing...");
-            generateWord();
-          })
-          correctAudio.volume = successAudioVolume;
-          correctAudio.play();
-        } else {
-          $("#submit").addClass("btn-success").removeClass("btn-error").text("Submit Answer");
-          $("#playWord").addClass("#text-7xl").removeClass("text-4xl").removeClass("w-1/2").removeClass("text-center").text("Word is playing...");
-          generateWord();
-        }
-      } else {
-        wrong++; streak = 0;
-        $("#wrong").html(wrong + '<i class="fa fa-times pl-2"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
-        $("#answer").val("").blur();
-        const wrongAudio = new Audio(`${rootPath}assets/wrong.mp3`);
-        wrongAudio.addEventListener("ended", () => {
-          incorrectWord();
-        });
-        wrongAudio.volume = wrongAudioVolume;
-        wrongAudio.play();
-      }
-    }
-  }
-})
-
 //alternatively handle submit button presses in the same way that enter keypresses are handled
 $("#submit").click(() => {
-  if (!currentWordIncorrect) {
-    if ($("#answer").val().trim() === word) {
-      correct++; streak++;
-      $("#correct").html(correct + '<i class="fa fa-check pl-1"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
-      $("#answer").val("").blur();
-      
-      //handle playing the success audio
-      if(!successAudioDisabled) {
-        const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
-        correctAudio.addEventListener("ended", () => {
-          generateWord();
-        })
-        correctAudio.volume = successAudioVolume;
-        correctAudio.play();
+  if ($("#answer").val().trim() === word || $("#answer").val().trim() === hasAlternativeSpellings(word)) {
+    if(!tempAltSpelling) {
+      if(hasAlternativeSpellings(word)) {
+        tempAltSpelling = hasAlternativeSpellings(word);
+        $("#submit").removeClass("btn-success").removeClass("btn-error").addClass("btn-warning").text("Enter alt spelling"); $("#answer").val("").blur();
+        playWord();
       } else {
-        generateWord();
+        correct++; streak++;
+        $("#correct").html(correct + '<i class="fa fa-check pl-1"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>'); $("#answer").val("").blur(); $("#submit").addClass("btn-success").removeClass("btn-error").removeClass("btn-warning").text("Submit Answer");
+        if(!successAudioDisabled) { const correctAudio = new Audio(`${rootPath}assets/correct.mp3`); correctAudio.addEventListener("ended", () => { generateWord(); }); correctAudio.volume = successAudioVolume; correctAudio.play(); } else { generateWord(); }
       }
     } else {
-      wrong++; streak = 0;
-      $("#wrong").html(wrong + '<i class="fa fa-times pl-2"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>');
-      $("#answer").val("").blur();
-      const wrongAudio = new Audio(`${rootPath}assets/wrong.mp3`);
-      wrongAudio.addEventListener("ended", () => {
-        incorrectWord();
-      });
-      wrongAudio.volume = wrongAudioVolume;
-      wrongAudio.play();
+      if(hasAlternativeSpellings($("#answer").val().trim()) == tempAltSpelling) {
+        toastr.warning("You have already used that spelling, please enter the alternative spelling!", "Alternative Spelling Error"); $("#answer").val("").blur();
+      } else {
+        tempAltSpelling = ""; correct++; streak++;
+        $("#correct").html(correct + '<i class="fa fa-check pl-1"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>'); $("#answer").val("").blur(); $("#submit").addClass("btn-success").removeClass("btn-error").removeClass("btn-warning").text("Submit Answer");
+        if(!successAudioDisabled) { const correctAudio = new Audio(`${rootPath}assets/correct.mp3`); correctAudio.addEventListener("ended", () => { generateWord(); }); correctAudio.volume = successAudioVolume; correctAudio.play(); } else { generateWord(); }
+      }
     }
-  } else {
-    if ($("#answer").val().trim() === word) {
+  } 
+  else {
+    wrong++; streak = 0;
+    $("#wrong").html(wrong + '<i class="fa fa-times pl-2"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>'); $("#answer").val("").blur();
+    const wrongAudio = new Audio(`${rootPath}assets/wrong.mp3`); wrongAudio.addEventListener("ended", () => { incorrectWord(); }); wrongAudio.volume = wrongAudioVolume; wrongAudio.play();
+  }
+  /*else {
+    if ($("#answer").val().trim() === word || $("#answer").val().trim() === hasAlternativeSpellings(word)) {
       temp.push(word);
       $("#answer").val("").blur();
       currentWordIncorrect = false;
@@ -318,16 +240,11 @@ $("#submit").click(() => {
       //handle playing the success audio
       if(!successAudioDisabled) {
         const correctAudio = new Audio(`${rootPath}assets/correct.mp3`);
-        correctAudio.addEventListener("ended", () => {
-          $("#submit").addClass("btn-success").removeClass("btn-error").text("Submit Answer");
-          $("#playWord").addClass("#text-7xl").removeClass("text-4xl").removeClass("w-1/2").removeClass("text-center").text("Word is playing...");
-          generateWord();
-        })
+        correctAudio.addEventListener("ended", () => { $("#submit").addClass("btn-success").removeClass("btn-error").removeClass("btn-warning").text("Submit Answer"); generateWord(); })
         correctAudio.volume = successAudioVolume;
         correctAudio.play();
       } else {
-        $("#submit").addClass("btn-success").removeClass("btn-error").text("Submit Answer");
-        $("#playWord").addClass("#text-7xl").removeClass("text-4xl").removeClass("w-1/2").removeClass("text-center").text("Word is playing...");
+        $("#submit").addClass("btn-success").removeClass("btn-error").removeClass("btn-warning").text("Submit Answer");
         generateWord();
       }
     } else {
@@ -341,6 +258,13 @@ $("#submit").click(() => {
       wrongAudio.volume = wrongAudioVolume;
       wrongAudio.play();
     }
+  }
+    */
+})
+
+$("#answer").on("keydown", (event) => {
+  if (event.key === "Enter") {
+    $("#submit").click();
   }
 })
 
