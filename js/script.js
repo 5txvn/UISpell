@@ -207,8 +207,8 @@ $("#answer").on("keyup", () => {
 $("#submit").click(() => {
   if ($("#answer").val().trim() === word || $("#answer").val().trim() === hasAlternativeSpellings(word)) {
     if(!tempAltSpelling) {
-      if(hasAlternativeSpellings(word)) {
-        tempAltSpelling = hasAlternativeSpellings(word);
+      if(hasAlternativeSpellings($("#answer").val().trim())) {
+        tempAltSpelling = hasAlternativeSpellings($("#answer").val().trim());
         $("#submit").removeClass("btn-success").removeClass("btn-error").addClass("btn-warning").text("Enter alt spelling"); $("#answer").val("").blur();
         playWord();
       } else {
@@ -218,7 +218,7 @@ $("#submit").click(() => {
       }
     } else {
       if(hasAlternativeSpellings($("#answer").val().trim()) == tempAltSpelling) {
-        toastr.warning("You have already used that spelling, please enter the alternative spelling!", "Alternative Spelling Error"); $("#answer").val("").blur();
+        toastr.warning("Please enter the alternative spelling!", "Alternative Spelling Error"); $("#answer").val("").blur().focus();
       } else {
         tempAltSpelling = ""; correct++; streak++;
         $("#correct").html(correct + '<i class="fa fa-check pl-1"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>'); $("#answer").val("").blur(); $("#submit").addClass("btn-success").removeClass("btn-error").removeClass("btn-warning").text("Submit Answer");
