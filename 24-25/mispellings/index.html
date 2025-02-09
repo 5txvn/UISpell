@@ -4,27 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mispellings</title>
-    <!-- import tailwind -->
     <script src="/scripts/tailwind.css"></script>
     <script src="/UISpell/scripts/tailwind.css"></script>
-    <!-- import daisyui -->
     <link href="/scripts/daisyui.css" rel="stylesheet" type="text/css" />
     <link href="/UISpell/scripts/daisyui.css" rel="stylesheet" type="text/css" />
-    <!-- import jquery -->
     <script src="/scripts/jquery.min.js"></script>
     <script src="/UISpell/scripts/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 </head>
 <body>
-    <div class="flex flex-col justify-center items-center h-screen">
+    <div class="flex flex-col justify-center items-center h-screen" id="buttons">
         <button class="btn btn-neutral text-white w-4/5 text-3xl font-extrabold h-auto p-3" id="1"></button>
         <button class="btn btn-neutral text-white w-4/5 text-3xl font-extrabold h-auto p-3 mt-8" id="2"></button>
         <button class="btn btn-neutral text-white w-4/5 text-3xl font-extrabold h-auto p-3 mt-8" id="3"></button>
         <button class="btn btn-neutral text-white w-4/5 text-3xl font-extrabold h-auto p-3 mt-8" id="4"></button>
         <button class="btn btn-neutral text-white w-4/5 text-3xl font-extrabold h-auto p-3 mt-8" id="5"></button>
     </div>
+    <div class="flex flex-col justify-center items-center h-screen" id="correctInput">
+        <input class="input input-bordered rounded-xl w-3/4 text-center p-8" id="spellingInput" autocomplete="off">
+        <button class="btn btn-neutral rounded-xl w-3/4 mt-20 p-4 h-auto text-5xl font-extrabold" id="submitSpelling">Submit Spelling</button>
+    </div>
 </body>
-<script src="../data/alternativeSpellings.js" defer></script>
 <script>
+    $("#correctInput").hide();
+    toastr.options.progressBar = true;
+    toastr.options.positionClass = "toast-top-full-width";
+    toastr.options.timeOut = 2500;
+
+    const alternativeSpellings = [["à la carte","a la carte"],["acanthus","Acanthus"],["admiralty","Admiralty"],["anemia","anaemia"],["ankylosis","anchylosis"],["anopheles","Anopheles"],["archaeopteryx","Archaeopteryx"],["artifact","artefact"],["aspidistra","Aspidistra"],["Baghdad","Bagdad"],["Balthazar","Balthasar"],["bateaux","batteaux"],["Benghazi","Bengasi"],["bildungsroman","Bildungsroman"],["Bolshevik","bolshevik"],["boreal","Boreal"],["burgeon","bourgeon"],["catholic","Catholic"],["cesarean section","caesarean section"],["chalcedony","calcedony"],["composite","Composite"],["crosier","crozier"],["cyclopean","Cyclopean"],["decaliter","dekaliter"],["denouement","dénouement"],["diamante","diamanté"],["dieffenbachia","Dieffenbachia"],["Dionysian","dionysian"],["dracaena","Dracaena"],["eremurus","Eremurus"],["façadism","facadism"],["faience","faïence"],["falafel","felafel"],["faux-naïf","faux-naif"],["fluky","flukey"],["giardia","Giardia"],["gulag","Gulag"],["Hejaz","Hedjaz"],["illuminati","Illuminati"],["imam","Imam"],["intransigent","intransigeant"],["jubilee","Jubilee"],["Kandahar","Qandahar"],["knar","knaur"],["krummhorn","crumhorn"],["Laundromat","laundromat"],["leukocytosis","leucocytosis"],["Maccabeus","Maccabaeus"],["maharaja","maharajah"],["mandarin","Mandarin"],["marquetry","marqueterie"],["Monsignor","monsignor"],["muraled","muralled"],["myxedema","myxoedema"],["nicotiana","Nicotiana"],["oxalis","Oxalis"],["pantoffle","pantofle"],["pescetarian","pescatarian"],["philharmonic","Philharmonic"],["piranha","piraña"],["Plexiglas","plexiglass"],["porte-cochère","porte-cochere"],["poulard","poularde"],["reexamine","re-examine"],["regime","régime"],["sabbatical","Sabbatical"],["sadhu","saddhu"],["schlemiel","shlemiel"],["soiree","soirée"],["storm-petrel","storm petrel"],["taeniacide","teniacide"],["tahsildar","tahseeldar"],["tchotchke","chachka"],["teetotaler","teetotaller"],["template","templet"],["tilapia","Tilapia"],["Turkistan","Turkestan"],["tympanum","timpanum"],["uitlander","Uitlander"],["velour","velours (singular)"],["whiz-bang","whizz-bang"],["wisteria","Wisteria"],["Xhosa","Xosa"],["zareba","zareeba"]];
     const words = ["à la carte","aardvark","Abadan","abate","abhorrence","able-bodied","abscissa","absorbefacient","acanthus","acciaccatura","acclimatization","accumbent","acerbity","achondroplasia","acolyte","actinomycosis","ad hominem","ad nauseam","adamant","addlepated","adenoma","admiralty","adulate","adumbration","adventuresome","adynamia","aerophobia","affianced","agglomerate","aggravation","agitato","agog","aileron","akinesia","albuterol","aldermancy","algebraic","aliment","alla breve","allude","altazimuth","altruistic","Alzheimer's disease","amarelle","Americanize","amoxicillin","amperage","amphisbaena","amulet","amygdaline","anacrusis","analogous","anaphylaxis","anathematize","andesite","Andorra","anemia","anemometry","Anglophile","anguished","ankylosis","annular ligament","anopheles","Antarctica","antepenultimate","anthropometry","anticyclone","antimacassar","antinome","antiphony","antiphrasis","aortography","aperçu","aplomb","apolitical","appertain","appoggiatura","apprehensible","aquamarine","Aquarius","Aramaic","archaeopteryx","archdiocese","arenaceous","argumentation","Aristophanes","arrogance","artifact","ascetic","asocial","aspidistra","assimilable","astragal","atamasco lily","atomism","au courant","aubergine","Auckland","Augean","auricular","auspice","australopithecine","automatism","Averno","aversion","avionics","avoirdupois","Babbitt metal","bacteriophage","bafflement","Baghdad","balalaika","balladeer","ballistics","Balthazar","banjoist","barberry","Barents Sea","bas-relief","bateaux","Batesian mimicry","bauble","Bavarian","béarnaise sauce","beatification","beau ideal","bedlamite","bel esprit","Benghazi","bequest","besotted","Bethesda","bibliomancy","bicaudal","bildungsroman","bilious","bimaxillary","bioassay","bireme","bisector","blazonry","blepharospasm","bois de rose","Bolshevik","bombastically","boondoggle","Boötes","boreal","borzoi","bouillabaisse","bradylogia","brannigan","bresaola","brilliantine","brocade","bromeliad","Bronx cheer","brucellosis","Brunei","Bucharest","bullion","burgeon","Byronic","cabretta","cachinnation","caconym","cadmium","caïque","caisson disease","caldera","calque","calumny","canaille","cannonade","canvasser","capriccioso","carafe","carbuncular","carcinogenic","carnassial","carne asada","carpaccio","cassoulet","catalepsy","catamaran","catarrh","catenate","catholic","catoptric","caucus","cause célèbre","caveat","cayenne pepper","ceilometer","celibacy","cembalo","centripetal","cerecloth","certitude","cesarean section","ceteris paribus","chalcedony","chance-medley","chanoyu","Charybdis","chassé","chelate","chemise","chemolithoautotroph","chest of drawers","chevelure","chiasmus","chiromancy","choreographer","chow mein","chrestomathy","chrysalis","cicatrize","cinerarium","cinquecento","circumambient","circumscribe","cisalpine","classicist","clear-air turbulence","cloisonné","coadjutant","coaxial cable","cocklebur","coconspirator","codicillary","coeval","cognitive","coho salmon","coiffeur","collegium","colonnade","comestibles","comme il faut","commitment","communiqué","composite","computerese","con spirito","conciliar","concurrence","condonation","congeries","congruency","connotation","conquistador","consanguinity","conspiracy theory","consuetude","conterminous","contortionist","contretemps","convoluted","Copenhagen","coquetry","coreligionist","coronary bypass surgery","corrigible","cosmopolite","countercoup","counterintelligence","couscous","covenantee","craniofacial","credulous","crematorium","crenate","crepuscular","Creüsa","Cro-Magnon","crosier","crucible","crypt","cue card","cui-ui","curettage","curriculum vitae","curvilinear","cyclopean","cystectomy","Dachau","dacquoise","daguerreotype","damage control","Dantesque","Dar es Salaam","dashiki","de trop","debacle","debarred","debility","Debussy","decagon","decaliter","decemvir","declassification","decrepitude","deducible","defenestrate","definitive","defray","defunct","degenerate","deism","Delphic","demersal","demijohn","democratization","Democritus","demoniac","demulcent","demurrage","dendriform","denomination","denouement","deontology","deportee","deprivation","deracinate","derring-do","Des Moines","desecrate","desideratum","desquamate","deterge","deterioration","devastator","devoid","diabetes insipidus","dialectic","diamante","diazinon","dieffenbachia","differentiate","digitization","diktat","diminutive","dimorphism","Dionysian","disaccharide","discographer","discordant","discursive","disparagement","dispensation","dissertation","dissever","distensible","diurnal","divestiture","doe-eyed","dolce vita","domicile","donnée","doublespeak","doubting Thomas","dracaena","dramatic monologue","dreadlocks","dual-purpose","dulcify","duopsony","dura mater","dyad","dysfunction","E. coli","earth art","eau de cologne","echelon","echinoid","ectogenous","editor in chief","efferent","effluxion","effrontery","egads","egalitarian","eisteddfod","élan","eldercare","electrocution","elixir","eluviation","embarrassment","embolden","embryectomy","emery board","emigrant","empoison","en bloc","en rapport","enarthrosis","encephaloma","endergonic","ennead","ennui","ensanguine","enteritis","entrepreneurial","enwreathe","enzymes","epergne","epicanthic fold","epicycloid","epigrammatic","epistolary","equinox","eremitic","eremurus","Eritrea","erstwhile","erudite","erythema","eschatology","espalier","Essene","Ethiopian","étouffée","Eucharist","euphuism","eurythermal","evanesce","evangelism","evolutionary","ex post facto","ex vivo","excelsior","exclusionary","excrescence","excruciatingly","exegete","exempli gratia","exiguous","exoteric","exotically","expectorate","exponentiation","expunge","exscind","extirpate","extraneous","extraterritorial","extrinsic","exuviae","façadism","factionalize","faience","falafel","Falstaffian","farinaceous","fatigable","faux-naïf","faveolate","febrifacient","felicitous","fenestration","fermata","fermium","fervency","fibrillation","fibromyalgia","fiery","Filipino","flagellant","flambéing","flameout","flavonoid","flews","floribunda","fluky","fluoroscopy","fluvial","folderol","fomite","fool's errand","force majeure","formaldehyde","fractionalize","frappé","fraught","frenzied","frondescent","fumarole","funerary","furtively","Gadsden Purchase","galantine","gambado","ganglion","gastroenterology","gaucherie","geisha","gender-neutral","generative","geneticist","gentrification","geostrategy","gerund","gestic","gesundheit","giardia","gilt-edged","glaciologist","glissando","Gloucester","goethite","golem","googol","Gorgonzola","gossipmonger","gourami","gramineous","granuloma","Greenwich time","grimalkin","groupthink","guayabera","guelder rose","gulag","gurus","Gutenberg","gymkhana","gyral","haberdasher","habitué","hagioscope","hammertoe","Hare Krishna","harum-scarum","hasenpfeffer","hawthorn","heathenish","heavy-handed","Hebraist","hectored","hedonics","Hejaz","heliotaxis","hellacious","hemangioma","hennery","heptastich","Herculaneum","hereditament","Herodotus","heroically","heterogeneity","hexapod","hierarchize","Hippocratic oath","hispid","Ho Chi Minh","hollandaise sauce","holographic","homiletics","homocentric","Hooverville","hors de combat","hospitalization","howitzer","Huitzilopochtli","humidify","hydrocephalous","hydrotherapy","hyoid bone","hypercritical","hypopnea","ibuprofen","iconoclast","ideate","idolatry","ihram","ill-considered","illuminati","illusory","imam","imbibition","immiscible","immunocompromised","impede","impetuosity","impious","impregnable","improbity","improvident","impunity","in extremis","in memoriam","in situ","incapacitant","incognizant","incompatibility","incorporeal","incumbency","incursion","indefensible","indelible","indigestible","Indonesia","indophenol","inebriated","inexpiable","infamy","infrared","inglenook","inglorious","inimitable","iniquitous","inquietude","insatiate","insouciance","insurgency","inter alia","intercalary","intercoastal","Interlingua","internecine","intimidation","intonate","intransigent","intubate","invariable","iridectomy","irrefutable","isallobar","isotope","itemization","iterate","jaçana","Jacob's ladder","jai alai","Jaipur","Janus","jejunum","jeté","jingoist","jocular","John Hancock","jojoba","jubilee","judgmatic","Juneau","jurat","jus gentium","juvenescent","K ration","kalimba","kameez","Kandahar","karma","kefir","kendo","keratin","ketogenesis","Khoisan","Kiddush","kielbasa","kilderkin","kinescope","Kirkuk","kitsch","Klamath","knar","knowledge base","kookiest","Krebs cycle","krumkake","krummhorn","Kurdistan","kyphosis","labor-intensive","lacertilian","lactescent","lacustrine","Laertes","laissez-faire","lamedh","lamprey","landsleit","languet","Laodicean","lapis lazuli","larcenous","larghetto","laryngoscope","latifundium","Laundromat","Lebanon","lederhosen","legist","leisurewear","lemma","leonine rhyme","leptospirosis","leukocytosis","leviathan","levorotatory","Liberia","Libya","lief","ligation","lignum vitae","limbic system","Limburger","linea aspera","linearize","linguaphile","lipectomy","liripipe","lithotomy","lixiviate","loci","logomachy","longueur","lorgnette","louche","Lucite","luculent","ludic","lumpenproletariat","lutefisk","lyricize","Maccabeus","machicolate","mackinaw","macrobiotics","madeleine","magna cum laude","maharaja","maidenhair fern","majoritarian","malagueña","malediction","malingerer","malodorous","malversation","mandarin","Mandela","mangonel","manipulable","mansuetude","manteau","Manxwoman","maquiladora","maraca","maraud","marginalize","markhor","marmoreal","marquetry","martingale","masjid","massé","masticatory","matrilineage","maxillofacial","mazuma","McGuffey","measurable","mediagenic","mediocrity","meerschaum","megalith","Melanesia","melanous","meliorate","mellifluous","melodeon","memento mori","meno mosso","mercantilism","Mercator projection","merengue","merino","mesenchyme","mesothelium","metagnathous","metatarsal","methanol","metonymy","meunière","microburst","microdot","midwifery","Miletus","miliaria","milites gloriosi","millesimal","Minamata disease","minié ball","minor-leaguer","minuscule","mirepoix","miscalculate","mise en scène","misfeasance","misogynist","misspoken","mitochondrion","mitral stenosis","Moabite","mockumentary","modus vivendi","moiety","Moluccas","Monaco","monasticism","mongering","moniliform","monocle","monograph","monophobia","monotonous","Monsignor","Monticello","moroseness","morphophonemics","mosaicism","motorcade","mousse","moyen âge","Mozambique","mucocutaneous","multifarious","multiracial","multitudinous","muraled","muscatel","musique concrète","mutable","muumuu","mydriasis","myology","myxedema","Nacogdoches","nadir","Nahuatl","narcotism","nasturtium","nativistic","navel-gazing","Ndebele","Neanderthaloid","necessitate","necrobiosis","Neo-Freudian","Nepali","Nesselrode","networking","neuropathy","newel","Nibelung","nicotiana","Niflheim","nigrescence","nimiety","nip and tuck","Noachian","nociceptor","nolle prosequi","nomothetic","non compos mentis","nondiscrimination","nonintervention","nontenured","Norwich terrier","nostalgically","noumenon","nouveau riche","numen","numismatist","nutation","nutraceutical","nutritionist","Oaxaca","objurgate","obliterative","obsolesce","obstructionist","occasionally","ocelot","octodecimo","odeum","odiously","Odysseus","oenomel","off-the-record","Okinawa","olfactometer","ominously","omniscience","oncologic","oneiromancy","ontic","oompah","Oort cloud","opalescence","operose","ophidian","opioid","optimization","oread","orison","ornithischian","ornithopter","oropharynx","orthoepy","orthographical","osculate","ossuary","osteosarcoma","ostinato","otitis media","out-of-body","overborne","overrepresented","oxalis","oxytocic","ozostomia","pabulum","pachytene","pacifism","paella","paillette","paladin","palazzo","palimpsest","pallbearer","palliate","palominos","paltriness","pamphleteer","pancake landing","panegyrist","panhuman","pantoffle","paparazzo","papyrology","parable","paramedical","paraparesis","paraphrastic","parasympathetic","paravane","pareve","parietal","parlous","parmigiana","parotitis","particularize","paseo","passacaglia","passé","pasturage","paterfamilias","patrilineage","patroon","pavilion","peacenik","pedagoguish","pedometer","pelagic","pendulous","pentastich","penuriously","per capita","percolate","perennate","perestroika","periapt","periodontia","peripheral","peristalsis","permeability","peroneal","Perseid","persevere","persona non grata","pertinacity","pervious","pescetarian","petitio principii","petroglyph","pettifogger","pharmaceutic","phenomenology","philharmonic","phlebitis","phonate","phosphoresce","photomontage","pianissimo","piassaba","pileated woodpecker","pilloried","piquant","piranha","Piscean","pivotal","placable","placidity","plantain","platypuses","plebiscite","plectrum","plethoric","Plexiglas","plug-compatible","Plutonian","pneuma","poetic license","pointillistic","poliomyelitis","Pollyanna","polyglot","polystyrene","Pompeii","pontiff","populace","portal-to-portal","porte-cochère","portmanteau","portobello","posit","postern","postmeridian","potboiler","potpourri","Poughkeepsie","poulard","pragmatist","prairie schooner","preadolescence","predictor","preeclampsia","prehensile","premeditation","prerogative","president-elect","pre-Socratic","prestissimo","presynaptic","preterition","primatology","primogenitor","principled","pro bono","procès-verbal","prodigal","proletarian","pronunciamento","propolis","proscenium","proselytize","prosthesis","protolithic","providential","provost marshal","proxemics","psalmodist","pseudo-event","psittacine","psoriasis","psychokinesis","pterodactyl","pugilistic","puissant","pulque","punditry","purl stitch","Pygmalion","pyretic","pyrrhotite","quadricentennial","quadruplicate","quaffed","quaking aspen","quandaries","Quapaw","quasi-stellar object","quatrefoil","query","Quetzalcoatl","qui vive","quinoa","quipster","quixotical","quokka","rabbinate","raclette","racquetball","radioecological","radiopaque","rallentando","rampike","rappelled","rarefaction","ratatouille","ravelment","razorback","realpolitik","reapportionment","reappraisal","recalcitrant","recension","recoilless","recombinant","reconcilable","recoup","recrudesce","recuperatory","Red Cloud","redeployment","red-letter","reexamine","refugium","regime","regnant","regrettably","reinforcement","reliance","relume","reminiscence","remission","renegade","reniform","renowned","repertory","replicate","reprehend","reprobate","requite","rescindable","resistible","resonance","responsibility","resurrect","retention","retinoblastoma","retrovirus","reveille","revocation","Reykjavík","rhapsodic","rhetorician","rhizome","Rh-negative","Rhodesian ridgeback","rhodopsin","rhubarb","riboflavin","right-to-work law","rinforzando","ring-necked pheasant","ritornello","roborant","robustious","rodenticide","rodomontade","rogatory","roman-fleuve","Roosevelt Island","roseola","rotator cuff","rouleau","roundelay","rubber-stamp","rubella","Rubicon","rufescent","run-through","Russophile","sabbatical","sabulous","saccharide","sacher torte","sadhu","sagittate","Saint Elmo's fire","Saint-Tropez","salchow","sallet","saltatorial","salutatory","salvific","samizdat","Samoyed","samsara","sanbenito","sanctification","sandalwood","sannyasi","sapid","sardonicism","sassaby","satirize","sauerbraten","Sausalito","saxifrage","sayonara","scalariform","scandalmonger","scapegrace","scarlatinoid","schlemiel","scholiast","Schrödinger","sciatica","scopolamine","scot-free","screaming meemies","scrimshaw","scrupulously","sculpturesque","scutellate","séance","sebaceous gland","second-generation","secularize","sedition","segregable","self-aggrandizing","semidiurnal","semiopaque","sensei","Seoul","septicemia","sequential","seraph","seriatim","serology","sexagenarian","sforzando","shalloon","sharecropper","Shelta","shendyt","shiitake","shogi","shrike","sibylline","sika","silicosis","simpatico","sine die","singspiel","Sisyphean","skimobile","Skinnerian","slovenly","smatter","snollygoster","sociopolitical","soiree","solenoid","solicitously","Solo man","sommelier","somniloquy","sonneteer","soubise","soul-searching","sousaphone","spaghetti Western","spasmodic","species-specific","Spenserian sonnet","sphenic","spieling","spinet","splenetic","spoonerism","Sputnik","squalor","standpatter","star anise","statutory","steak tartare","stegosaur","stenothermal","sternutation","stickle","stipulation","stomatology","storm-petrel","stridulate","stromatolite","strophe","stultify","sub rosa","subcutaneous","subfusc","subjective idealism","suborn","subsidize","substantiate","sucrose","sui generis","Sumatran","sunny-side up","supercilious","supervene","supraorbital","surimi","susurration","Swaziland","syllogism","symptomatic","syncopation","synecdoche","synizesis","tacamahac","taeniacide","tahsildar","tallyho","tangential","Tanzania","Tappan Zee","tarot","tartuffery","tautonym","Tay-Sachs disease","tchotchke","teetotaler","telemarketer","telomere","template","tenebrous","terpsichorean","terrigenous","tessellate","testaceous","tête-à-tête","Tetragrammaton","thanatopsis","thematic","theophany","theurgy","thole pin","threnody","Tiananmen Square","tilapia","tinamou","Tipperary","tiramisu","Tishri","titubation","toheroa","tomatillo","tontine","topography","toreador","totalitarianism","toxicology","trachea","transcendent","transgressor","transmute","transparent","Transylvania","trapunto","trenchant","tribrach","trichromatic","triglyph","triphthong","trivialize","troglodyte","troposphere","Tuareg","Tucson","tumultuary","tumulus","Turkistan","Tuscany","tympanum","uitlander","umbrageously","unachievable","unassailable","unbundling","unciform","uncommitted","Uncompahgre Plateau","underemployed","understratum","unfounded","unifoliate","unilateral","uniparous","Universal Product Code","unmitigated","unmortise","unpaginated","unpalatable","unplumbed","unquenchable","unsusceptible","unwieldy","upwelling","urceolate","uxorial","vacillation","vagility","vagus nerve","Valkyrie","vallecula","valvular","van der Waals","Vancouver","varicotomy","variolite","vassalage","vaudevillian","Veda","velarize","velour","vendue","Venn diagram","ventriloquial","venture capital","verbalization","verismo","vernissage","vers libre","verticillate","vertiginous","Vespucci","vetiver","vexatious","vibratile","vicennial","victimize","Vietnamese","vilipend","viraginous","virtuosity","Visigoth","vitelline","vitriolic","vivify","vizier","voidable","volatility","vorticism","vox populi","vulpine","Waikiki","Walden Pond","Walter Mitty","wanderoo","warrantee","washeteria","watermark","Waziristan","Wellington boot","whetstone","whinchat","whiskbroom","whistle-stop","whiz-bang","wholehearted","wildebeest","willy-nilly","Windsor knot","wiretap","wisteria","wondrous","woolsorter's disease","wordsmith","worry beads","writ of error","xanthoma","xenolith","xerosis","Xhosa","XY recorder","Yahwist","Yamamoto","Yaqui","yaupon","yellowfin tuna","yerba buena","ylem","Yuchi","Yukon Territory","zaibatsu","Zaire","zareba","zedonk","zero-defect","zinc oxide","Zionism","zootechny","zygodactyl"]
     const pairs = [
         [/[A-Z]/, word => word.replace(/[A-Z]/g, match => match.toLowerCase())],
@@ -82,63 +90,118 @@
         [/al$/, word => word.replace(/ar$/, "el")],
     ]
     let backupPairs = [
-    [/(?<=.)(a)(?=.)/, word => word.replace(/(?<=.)(a)(?=.)/, "e")],
-    [/(?<=.)(e)(?=.)/, word => word.replace(/(?<=.)(e)(?=.)/, "i")],
-    [/(?<=.)(i)(?=.)/, word => word.replace(/(?<=.)(i)(?=.)/, "e")],
-    [/(?<=.)(o)(?=.)/, word => word.replace(/(?<=.)(o)(?=.)/, "e")],
-    [/(?<=.)(u)(?=.)/, word => word.replace(/(?<=.)(u)(?=.)/, "o")]
+        [/(?<=.)(a)(?=.)/, word => word.replace(/(?<=.)(a)(?=.)/, "e")],
+        [/(?<=.)(e)(?=.)/, word => word.replace(/(?<=.)(e)(?=.)/, "i")],
+        [/(?<=.)(i)(?=.)/, word => word.replace(/(?<=.)(i)(?=.)/, "e")],
+        [/(?<=.)(o)(?=.)/, word => word.replace(/(?<=.)(o)(?=.)/, "e")],
+        [/(?<=.)(u)(?=.)/, word => word.replace(/(?<=.)(u)(?=.)/, "o")]
     ]
 
-    function incorrectSpelling(word) {
-    let matches = 0;
-    let matchesArray = [];
-    for(const pair of pairs) {
-        if(pair[0].test(word)) {
-        matches++;
-        matchesArray.push(pair);
+    //fix this
+    function getAltSpellings(word) {
+        let result = false;
+        for(const spelling of alternativeSpellings) {
+            if(spelling.includes(word)) {
+                result = spelling.filter(wordSpelling => wordSpelling != word);
+            }
         }
+        return result
     }
-    let randomMatch;
-    if(matches > 0 && Math.random() > 0.2) {
-        randomMatch = matchesArray[Math.floor(Math.random() * matchesArray.length)];
-    } else {
-        randomMatch = backupPairs[Math.floor(Math.random() * backupPairs.length)];
-    }
-    return randomMatch[1](word);
+
+    function incorrectSpelling(word) {
+        let matches = 0;
+        let matchesArray = [];
+        let backupMatchesArray = [];
+        for(const pair of pairs) {
+            if(pair[0].test(word)) {
+                matches++;
+                matchesArray.push(pair);
+            }
+        }
+        for(const backupPair of backupPairs) {
+            if(backupPair[0].test(word)) {
+                backupMatchesArray.push(backupPair);
+            }
+        }
+        let randomMatch;
+        if(matches > 0 && Math.random() > 0.2) {
+            randomMatch = matchesArray[Math.floor(Math.random() * matchesArray.length)];
+        } else {
+            randomMatch = backupMatchesArray[Math.floor(Math.random() * backupMatchesArray.length)];
+        }
+        return randomMatch[1](word);
     }
 
     let wrongIndex;
+    let correctSpelling;
     let copy = words;
     function generateWords() {
+        $("#buttons").show();
+        $("#correctInput").hide();
         wrongIndex = Math.floor(Math.random() * 5);
-        const words = [];
         for (let i = 0; i < 5; i++) {
             const randomIndex = Math.floor(Math.random() * copy.length);
-            words.push(copy[randomIndex]);
             copy.splice(randomIndex, 1);
-            $(`#${i+1}`).text(wrongIndex == i ? incorrectSpelling(copy[randomIndex]) : copy[randomIndex]);
+            if(wrongIndex == i) {
+                correctSpelling = copy[randomIndex];
+                $(`#${i+1}`).text(incorrectSpelling(copy[randomIndex]));
+            } else {
+                if(getAltSpellings(copy[randomIndex]) && Math.random() < 0.5) {
+                    $(`#${i+1}`).text(getAltSpellings(copy[randomIndex]));
+                    console.log(`reached with ${getAltSpellings(copy[randomIndex])}`)
+                } else {
+                    $(`#${i+1}`).text(copy[randomIndex]);
+                }
+            }
         }
     }
     generateWords();
-    $("button").click(function() {
+    $("#buttons > button").click(function() {
         if(this.id == wrongIndex+1) {
             $(this).removeClass("btn-neutral").addClass("btn-success");
             setTimeout(() => {
                 $(this).removeClass("btn-success").addClass("btn-neutral");
                 copy = words;
-                generateWords();
-            }, 2000)
+            }, 1000)
+            $("#buttons").hide();
+            $("#correctInput").show();
+            $("#submitSpelling").click(() => {
+                if(!getAltSpellings(correctSpelling)) {
+                    if($("#spellingInput").val() == correctSpelling) {
+                        toastr.success("Correct Spelling!");
+                        setTimeout(() => { generateWords(); }, 1500);
+                    } else {
+                        toastr.warning(`Incorrect, the correct spelling was ${correctSpelling}`);
+                        setTimeout(() => { generateWords(); }, 1500);
+                    }
+                } else {
+                    if($("#spellingInput").val() == correctSpelling || $("#spellingInput").val() == getAltSpellings(correctSpelling)) {
+                        toastr.success("Correct Spelling!");
+                        setTimeout(() => { generateWords(); }, 1500);
+                    } else {
+                        toastr.warning(`Incorrect, the correct spelling was ${correctSpelling} or ${getAltSpellings(correctSpelling)}`);
+                        setTimeout(() => { generateWords(); }, 1500);
+                    }
+                }
+            })
         } else {
             $(this).removeClass("btn-neutral").addClass("btn-error");
             $(`#${wrongIndex+1}`).removeClass("btn-neutral").addClass("btn-success");
+            toastr.warning(`Correct spelling was ${correctSpelling}`);
             setTimeout(() => {
                 $(this).removeClass("btn-error").addClass("btn-neutral");
                 $(`#${wrongIndex+1}`).removeClass("btn-success").addClass("btn-neutral");
                 copy = words;
                 generateWords();
-            }, 2000)
+            }, 3000)
         }
     })
 
 </script>
+<style>
+    .toast {
+        min-width: 0 !important;
+        white-space: normal !important;
+    }
+</style>
 </html>
