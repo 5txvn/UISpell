@@ -22,8 +22,9 @@
         <button class="btn btn-neutral text-white w-4/5 text-3xl font-extrabold h-auto p-3 mt-8" id="5"></button>
     </div>
     <div class="flex flex-col justify-center items-center h-screen" id="correctInput">
-        <input class="input input-bordered rounded-xl w-3/4 text-center p-8" id="spellingInput" autocomplete="off">
-        <button class="btn btn-neutral rounded-xl w-3/4 mt-20 p-4 h-auto text-5xl font-extrabold" id="submitSpelling">Submit Spelling</button>
+        <h1 class="text text-5xl font-extrabold" id="mispelledWord"></h1>
+        <input class="input input-bordered rounded-xl w-3/4 text-center p-8 mt-20" id="spellingInput" autocomplete="off">
+        <button class="btn btn-neutral rounded-xl w-3/4 mt-20 p-4 h-auto text-4xl font-bold" id="submitSpelling">Submit Spelling</button>
     </div>
 </body>
 <script>
@@ -105,7 +106,7 @@
                 result = spelling.filter(wordSpelling => wordSpelling != word);
             }
         }
-        return result
+        return result;
     }
 
     function incorrectSpelling(word) {
@@ -124,25 +125,27 @@
             }
         }
         let randomMatch;
+        console.log(matches)
         if(matches > 0 && Math.random() > 0.25) {
             randomMatch = matchesArray[Math.floor(Math.random() * matchesArray.length)];
         } else {
+            console.log("reached here")
             randomMatch = backupMatchesArray[Math.floor(Math.random() * backupMatchesArray.length)];
         }
-        console.log(randomMatch)
         return randomMatch[1](word);
     }
 
     let wrongIndex;
     let correctSpelling;
-    let copy = words;
+    let copy = [...words];
+    
     function generateWords() {
+        copy = [...words];
         $("#buttons").show();
         $("#correctInput").hide();
         wrongIndex = Math.floor(Math.random() * 5);
         for (let i = 0; i < 5; i++) {
             const randomIndex = Math.floor(Math.random() * copy.length);
-            copy.splice(randomIndex, 1);
             if(wrongIndex == i) {
                 correctSpelling = copy[randomIndex];
                 $(`#${i+1}`).text(incorrectSpelling(copy[randomIndex]));
@@ -154,6 +157,7 @@
                     $(`#${i+1}`).text(copy[randomIndex]);
                 }
             }
+            copy.splice(randomIndex, 1);
         }
     }
     generateWords();
@@ -164,10 +168,10 @@
     })
     $("#buttons > button").click(function() {
         if(this.id == wrongIndex+1) {
+            $("#mispelledWord").text($(`#${wrongIndex+1}`).text());
             $(this).removeClass("btn-neutral").addClass("btn-success");
             setTimeout(() => {
                 $(this).removeClass("btn-success").addClass("btn-neutral");
-                copy = words;
             }, 1000)
             $("#buttons").hide();
             $("#correctInput").show();
@@ -197,7 +201,6 @@
             setTimeout(() => {
                 $(this).removeClass("btn-error").addClass("btn-neutral");
                 $(`#${wrongIndex+1}`).removeClass("btn-success").addClass("btn-neutral");
-                copy = words;
                 generateWords();
             }, 3000)
         }
