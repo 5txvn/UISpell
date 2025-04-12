@@ -84,6 +84,10 @@ $("#select").on("change", () => {
     $("#listTitle").text(`List of All Words`);
     $("title").text(`List of All Words | UISpell`);
     $("#mainScript").prepend(`<script src="${rootPath}24-25/data/all.js"></script>`);
+  } else if (code == "outside") {
+    $("#listTitle").text(`List of Outside Words`);
+    $("title").text(`List of Outside Words | UISpell`);
+    $("#mainScript").prepend(`<script src="${rootPath}24-25/data/outside-words.js"></script>`);
   } else {
     $("#listTitle").text(`Words that Start with ${code}`);
     $("title").text(`Words Starting With ${code} | UISpell`);

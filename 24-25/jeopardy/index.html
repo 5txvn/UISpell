@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeopardy</title>
+    <script src="/scripts/tailwind.css"></script>
+    <script src="/UISpell/scripts/tailwind.css"></script>
+    <link href="/scripts/daisyui.css" rel="stylesheet" type="text/css" />
+    <link href="/UISpell/scripts/daisyui.css" rel="stylesheet" type="text/css" />
+    <script src="/scripts/jquery.min.js"></script>
+    <script src="/UISpell/scripts/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="flex flex-row bg-blue-900 w-screen h-screen" id="main">
+        <div class="flex flex-col w-[16vw]" id="1">
+            <div class="bg-slate-900 w-[90%] ml-[1vw] mr-[1vw] mt-[5vh] h-[13%] text-white text-7xl font-bold flex justify-center items-center rounded-xl">Group 1</div>
+            <div class="mt-[5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="11">100</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="12">200</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="13">300</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="14">400</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="15">500</div>
+        </div>
+        <div class="flex flex-col w-[16vw]" id="2">
+            <div class="bg-slate-900 w-[90%] ml-[1vw] mr-[1vw] mt-[5vh] h-[13%] text-white text-7xl font-bold flex justify-center items-center rounded-xl">Group 2</div>
+            <div class="mt-[5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="21">100</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="22">200</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="23">300</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="24">400</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="25">500</div>
+        </div>
+        <div class="flex flex-col w-[16vw]" id="3">
+            <div class="bg-slate-900 w-[90%] ml-[1vw] mr-[1vw] mt-[5vh] h-[13%] text-white text-7xl font-bold flex justify-center items-center rounded-xl">Group 3</div>
+            <div class="mt-[5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="31">100</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="32">200</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="33">300</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="34">400</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="35">500</div>
+        </div>
+        <div class="flex flex-col w-[16vw]" id="4">
+            <div class="bg-slate-900 w-[90%] ml-[1vw] mr-[1vw] mt-[5vh] h-[13%] text-white text-7xl font-bold flex justify-center items-center rounded-xl">Group 4</div>
+            <div class="mt-[5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="41">100</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="42">200</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="43">300</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="44">400</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="45">500</div>
+        </div>
+        <div class="flex flex-col w-[16vw]" id="5">
+            <div class="bg-slate-900 w-[90%] ml-[1vw] mr-[1vw] mt-[5vh] h-[13%] text-white text-7xl font-bold flex justify-center items-center rounded-xl">Group 5</div>
+            <div class="mt-[5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="51">100</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="52">200</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="53">300</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="54">400</div>
+            <div class="mt-[2.5%] bg-blue-950 w-[90%] ml-[1vw] mr-[1vw] text-white text-9xl font-extrabold !h-[14%] flex justify-center items-center rounded-2xl" id="55">500</div>
+        </div>
+        <div class="flex flex-col mt-[5vh] mb-[5vh] h-[90vh] mr-[1vw] w-[19vw] bg-slate-900 rounded-2xl text-center">
+            <h1 class="text-6xl font-bold text-white mt-[5%]" contenteditable="true">T1</h1>
+            <span class="text-5xl font-semibold text-white mt-[5%]"><span id="team1">0</span> <i class="fa fa-plus text-success cursor-pointer ml-[15%]" onclick='updateScore(1, true)'></i> <i class="fa fa-minus cursor-pointer text-error" onclick='updateScore(1, false)'></i></span>
+            <h1 class="text-6xl font-bold text-white mt-[15%]" contenteditable="true">T2</h1>
+            <span class="text-5xl font-semibold text-white mt-[5%]"><span id="team2">0</span> <i class="fa fa-plus text-success cursor-pointer ml-[15%]" onclick='updateScore(2, true)'></i> <i class="fa fa-minus cursor-pointer text-error" onclick='updateScore(2, false)'></i></span>
+            <h1 class="text-6xl font-bold text-white mt-[15%]" contenteditable="true">T3</h1>
+            <span class="text-5xl font-semibold text-white mt-[5%]"><span id="team3">0</span> <i class="fa fa-plus text-success cursor-pointer ml-[15%]" onclick='updateScore(3, true)'></i> <i class="fa fa-minus cursor-pointer text-error" onclick='updateScore(3, false)'></i></span>
+            <h1 class="text-6xl font-bold text-white mt-[15%]" contenteditable="true">T4</h1>
+            <span class="text-5xl font-semibold text-white mt-[5%]"><span id="team4">0</span> <i class="fa fa-plus text-success cursor-pointer ml-[15%]" onclick='updateScore(4, true)'></i> <i class="fa fa-minus cursor-pointer text-error" onclick='updateScore(4, false)'></i></span>
+            <h1 class="text-6xl font-bold text-white mt-[15%]" contenteditable="true">T5</h1>
+            <span class="text-5xl font-semibold text-white mt-[5%]"><span id="team5">0</span> <i class="fa fa-plus text-success cursor-pointer ml-[15%]" onclick='updateScore(5, true)'></i> <i class="fa fa-minus cursor-pointer text-error" onclick='updateScore(5, false)'></i></span>
+        </div>
+    </div>
+</body>
+<script>
+    const definitions = `sternutation - the act of sneezing | a sneeze
+stomatology - the medical study of the mouth and its diseases
+stridulate - to product a shrill grating, chirping, or hissing sound by rubbing body parts together, as certain insects do
+subfusc - of a dark, dull, or somber color | dark, dull clothing
+suborn - to induce a person to commit an unlawful or evil act | to produce perjured testimony | to induce a person to commit perjury
+supervene - to come or occur as something extraneous, additional, or unexpected | to follow immediately after; ensue | to be dependent on a set of facts or properties in such a way that change is possible only if change occurs in those facts or properties
+Swaziland - A country of southeast Africa between South Africa and Mozambique. Settled in the early 1800s by Swazi groups fleeing Zulu attacks, the region became a South African protectorate (1894-1899), was transferred to British administration in 1903, was granted limited autonomy in 1963, and gained full independence in 1968. In 2018, its name was officially changed from Swaziland to Eswatini. Mbabane is the capital and the largest city.
+tarot - any of a set of usually 78 playing cards including 22 cards depicting vices, virtues, and elemental forces, used in fortune telling | any of these pictorial cards used as trump in tarok
+tchotchke - a cheap showy trinket
+template - a pattern or gauge, such as a thin metal plate with a cut pattern used as a guide in making something accurately (ie. woodworking or carving) | document or file having a preset format used as a starting point for an application | horizontal piece of stone or timber used to distribute pressure over a door frame | molecule of nucleic acid that serves as a pattern for synthesis of a macromolecule
+tenebrous - dark and gloomy
+tessellate - to form into a mosaic pattern, as by using small squares of stone or glass
+theophany - an appearance of a god to a human | a divine manifestation
+thole pin - a wooden peg set in pairs in the gunwales of a boat to serve as an oarlock
+toheroa - a large edible marine clam (Paphies ventricosa) native to New Zealand
+toxicology - the study of the nature, effects, and detection of poisons and the treatment of poisoning
+transmute - to change from one form, nature, substance, or state into another (transform) | to undergo transmutation
+triglyph - an ornament in a Doric frieze, consisting of a projecting block having on its face two parallel vertical glyphs or grooves and two half grooves or chamfers on either vertical end, that separates the metopes
+triphthong - a compound vowel sound resulting from succession of three simple ones and functioning as a unit
+troposphere - the lowest region of the atmosphere between the earth's surface and the tropopause, characterized by decreasing temperature with increasing altitude.
+tumultuary - marked by haste, confusion, disorder, and irregularity
+unciform - having a hooked shape | a small, hook-shaped carpal bone of the wrist
+unilateral - of, relating to, or inmvolving only one side | performed by only one side | obligating only one of two or more parties, nations, etc. | emphasizing only one side of a subject | having only one side | tracing lineage of one parent only | having parts on one side (botany)
+uniparous - producing only one egg or offspring at a time | having produced only one offspring
+unmitigated - not diminished or moderated in intensity or severity (unrelieved) | Without qualification or exception (absolute)
+unmortise - to loosen a mortised joint (joint which connects two pieces of wood) of | to separate
+uxorial - of a wife, regarded as befitting (being suitable for) a wife
+vagility - quality of being able to or tending to move from place to place or disperse
+valvular - relating to, having, or operating by means of valves or valvelike parts
+vassalage - the condition of being a vassal (subordinate, slave, person who is subject to a feudal lord) | service required of a vassal | position of subordination | land held by a vassal | vassals considered as a group
+vernissage - a private showing held before the opening of an art exhibition
+vers libre - free verse (poetic verse composed of variable, unrhymed lines with no metrical pattern)
+Vespucci - Italian navigator and explorer of the South American coast. America was named in his honor (his first name was Amerigo, b.1454-1512)
+vicennial - happening once every 20 years | existing or lasting for 20 years
+viraginous - a woman regarded as noisy, scolding, or domineering | a large, strong, courageous woman
+Visigoth - A member of the western Goths that invaded the Roman Empire in the fourth century AD and settled in France and Spain, establishing a monarchy that lasted until the early eighth century
+vizier - A high officer in a Muslim government, especially in the Ottoman Empire
+volatility - evaporating readily at normal temperatures and pressures | tending to vary often or widely (ie. in price), inconstant | lighthearted | ephemeral (fleeting) | tending to violence, explosive | flying or capable of flying (volant) | of or relating to memory whos data is erased when the power is interrupted
+vulpine - resembling or characteristic of a fox | cunning, clever
+Walden Pond - A pond of northeast Massachusetts near Concord. Henry David Thoreau lived in a cabin near the pond from 1845 to 1847.
+whetstone - a hard, fine-grained stone for honing tools, (aka snakestone)
+wildebeest - Either of two large antelopes (Connchaetes gnou or C. taurinus), having a drooping mane and beard, a long tufted tail, and curved horns in both males and females, (aka gnu)
+wondrous - remarkable or extraordinary, wonderful | to a wonderful or remarkable extent
+writ of error - a writ commissioning an appellate court to review the proceedings of another court and correct the judgment given if deemed necessary
+xanthoma - a yellowish-orange, lipid-filled nodule or papule in the skin, often on an eyelid or over a joint
+xerosis - abnormal dryness, especially of the skin, eyes, or mucous membranes | normal hardening of aging tissue
+yaupon - a small evergeen holly tree (Ilex vomitoria) chiefly of the southeast U.S, having red or sometimes yellow fruit and glossy leaves formerly used to make bitter tea
+ylem - a form of matter hypothesized by proponents of the Big Bang theory to have existed before the formation of the chemical elements
+Zaire - Officially Democratic Republic of the Congo, named Zaire between 1971-1977, Congo from 1960-1971, Belgian Congo from 1908-1960, and Congo Free State from 1885-1908. A country of central Africa astride the equator. Inhabited originally by Pygmy peoples and later by migrating Bantu and Nilotic groups, the region came under the control of Leopold II of Belgium in the late 1870s and was annexed outright in 1908. Full independence was achieved in 1960. Army general Mobutu Sese Seko took control of the country in 1965, ruling until his ouster by rebel forces in 1997. Kinshasa is the capital and the largest city
+zygodactyl - having two toes projecting forward and two projecting backward as in climbing birds | a zygodactyl bird such as a parrot`
+    //initialize groups
+    let terms = definitions.split("\n");
+    let group1 = []; let group2 = []; let group3 = []; let group4 = []; let group5 = [];
+    let teamScores = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
+    let attemptedArray = [];
+    for(let x = 0; x<5; x++) {
+        attemptedArray[x] = [];
+        for(let y = 0; y<5; y++) {
+            attemptedArray[x][y] = false;
+        }
+    }
+    function updateScore(team, increase) {
+        console.log(team, increase)
+        if (increase) { teamScores[team] += 100; }
+        else { teamScores[team] -= 100; }
+        $(`#team${team}`).text(teamScores[team]);
+    }
+    for(let i = 1; i <= 5; i++) {
+        for(let x = 0; x<5; x++) {
+            const index = Math.floor(Math.random() * terms.length);
+            console.log(terms.length);
+            eval(`group${i}.push("${terms[index]}")`);
+            terms.splice(index, 1);
+            $(`#${i}${x}`).click(function() {
+                if(!attemptedArray[eval(i-1)][eval(x)]) {
+                    attemptedArray[eval(i-1)][eval(x)] = "getAnswer";
+                    //hide everything but element in question
+                    $("#main").children().each(function(firstIndex) {
+                        if(firstIndex != i-1) {
+                            $(this).hide();
+                        } else {
+                            $(this).children().each(function(secondIndex) {
+                                if(secondIndex != x) {
+                                    $(this).hide();
+                                }
+                            })
+                        }
+                    });
+                    //animate element to take up full screen
+                    let word = eval(`group${i}[${x}]`).split(" - ")[0];
+                    $(this).addClass("p-16").addClass("mt-[2vh]").addClass("w-[98vw]").removeClass("rounded-2xl !h-[14%]").text(`Define ${word}`);
+                    setTimeout(() => { $(this).animate({ height: "96vh" }, 500) }, 500)
+                } else if (attemptedArray[eval(i-1)][eval(x)] == "getAnswer") {
+                    attemptedArray[eval(i-1)][eval(x)] = "returnHome";
+                    let definitions = eval(`group${i}[${x}]`).split(" - ")[1].split(" | ");
+                    $(this).html("").removeClass("text-9xl").addClass("text-6xl")
+                    definitions.forEach((definition, definitionIndex) => {
+                        $(this).append(`<br>${definitionIndex + 1}. ${definition}`);
+                    })
+                } else if (attemptedArray[eval(i-1)][eval(x)] == "returnHome") {
+                    $(this).removeClass("p-16 mt-[2vh] w-[98vw] text-6xl").addClass("rounded-2xl !h-[14%] text-9xl").text(`${eval(i-1)}00`);
+                    $("#main > *").show(); $(`#${eval(i)} > *`).show();
+                }
+            })
+        }
+        eval(`group${i}.sort((a, b) => a.split(" - ")[1].length - b.split(" - ")[1].length)`);
+    }
+
+</script>
+<style>
+    [contenteditable="true"]:focus {
+        outline: none;
+        border: none;
+    }
+</style>
+</html>
