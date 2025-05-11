@@ -124,6 +124,7 @@ function startRound() {
 
 //generate a word and play its audio
 function generateWord() {
+  console.log(temp);
     if (temp.length == 0) {
         temp = Object.keys(words);
         startRound();
@@ -136,7 +137,7 @@ function generateWord() {
         $('#pronunciation').attr('src', `data:audio/mp3;base64,${words[word]}`);
         $("#pronunciation")[0].play();
         $("#answer").focus();
-        temp = temp.filter(string => string !== word);
+        //temp = temp.filter(string => string !== word);
         $("#pronunciation").on("ended", () => {
             if (!currentWordIncorrect) {
                 $("#playWord").html("Click <span onclick='playWord()' class='text-success'>me</span> to play word again");
@@ -209,6 +210,7 @@ $("#answer").on("keyup", () => {
 
 //alternatively handle submit button presses in the same way that enter keypresses are handled
 $("#submit").click(() => {
+  console.log(currentWordIncorrect);
   if ($("#answer").val().trim() === word || $("#answer").val().trim() === hasAlternativeSpellings(word)) {
     if(!tempAltSpelling) {
       if(hasAlternativeSpellings($("#answer").val().trim())) {
@@ -218,6 +220,10 @@ $("#submit").click(() => {
       } else {
         correct++; streak++;
         $("#correct").html(correct + '<i class="fa fa-check pl-1"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>'); $("#answer").val("").blur(); $("#submit").addClass("btn-success").removeClass("btn-error").removeClass("btn-warning").text("Submit Answer");
+        if(!currentWordIncorrect) {
+          temp = temp.filter(string => string != word);
+        }
+        currentWordIncorrect = false;
         if(!successAudioDisabled) { const correctAudio = new Audio(`${rootPath}assets/correct.mp3`); correctAudio.addEventListener("ended", () => { generateWord(); }); correctAudio.volume = successAudioVolume; correctAudio.play(); } else { generateWord(); }
       }
     } else {
@@ -226,6 +232,10 @@ $("#submit").click(() => {
       } else {
         tempAltSpelling = ""; correct++; streak++;
         $("#correct").html(correct + '<i class="fa fa-check pl-1"></i>'); $("#streak").html(streak + '<i class="fa fa-dashboard pl-2"></i>'); $("#answer").val("").blur(); $("#submit").addClass("btn-success").removeClass("btn-error").removeClass("btn-warning").text("Submit Answer");
+        if(!currentWordIncorrect) {
+          temp = temp.filter(string => string != word);
+        }
+        currentWordIncorrect = false;
         if(!successAudioDisabled) { const correctAudio = new Audio(`${rootPath}assets/correct.mp3`); correctAudio.addEventListener("ended", () => { generateWord(); }); correctAudio.volume = successAudioVolume; correctAudio.play(); } else { generateWord(); }
       }
     }
